@@ -1,0 +1,24 @@
+body {
+  max-width: 1080px;
+  height: 100vh;
+  margin: auto auto;
+  background-image: url("../images/background-image.jpeg");
+  height: 100%;
+  background-position: absolute;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+form .input-image-prepend {
+  width: 35px;
+  padding: 0px;
+  margin-top: 2px;
+  margin-right: 13px;
+  height: 26px;
+  border: none;
+  background-color: transparent;
+}

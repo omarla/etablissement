@@ -1,0 +1,85 @@
+.formations {
+  margin-top: 10px;
+}
+
+.formations .nom-annee {
+  font-size: 20px;
+  font-family: "arial";
+}
+
+.formations .numero-annee {
+  font-size: 40px;
+  font-weight: bolder;
+}
+
+.formations .lettre-haut {
+  position: relative;
+  top: -15px;
+  font-size: 25px;
+}
+
+.formations .UE-title {
+  color: blanchedalmond;
+}
+
+.formations .semestre {
+  color: darkslategrey;
+}
+
+.formations div:nth-child(1) .nom-annee {
+  color: #344687;
+}
+
+.formations div:nth-child(2) .nom-annee {
+  color: #923e8c;
+}
+
+.formations div:nth-child(3) .nom-annee {
+  color: #e93790;
+}
+
+.accueil .news-image {
+  height: inherit;
+}
+.accueil .news-image img {
+  height: 330px;
+  display: none;
+}
+
+.accueil .news-image .direction-btn {
+  position: relative;
+  bottom: 60px;
+  font-size: 50px;
+  color: #000;
+  mix-blend-mode: darken;
+}
+
+.accueil .news-image .previous-btn {
+  left: 10px;
+}
+
+.accueil .news-image .next-btn {
+  right: 20px;
+}
+
+.accueil .news-titles {
+  margin-top: 10px;
+}
+.accueil .news-titles div {
+  border: 2px solid black;
+  margin-bottom: 3px;
+  padding: 5px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.accueil .news-titles h3 {
+  font-size: 20px;
+}
+
+.accueil .next-btn:nth-child(1) {
+  position: relative;
+  bottom: 80px;
+  left: 40px;
+  height: 20px;
+}

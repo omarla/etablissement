@@ -1,0 +1,64 @@
+ont_droits_de, 01 groupe, 0N droit
+droit: nom_droits, droit_creation_groupes, droit_creation_modules, droit_creation_lecons, droits_creation_utilisateurs, droit_modification_absences, droit_modification_droits, droit_modification_edt, droit_modification_donnees_utilisateur, droit_modification_heures_travail, droit_visualisation_stats, droit_visualisation_heures_travail
+a_droit_de, 0N droit, 11 utilisateur
+pays: code_pays, nom_pays, nationalite
+groupe: id_groupe, nom_groupe
+habite_a, 11 utilisateur, 0N ville
+
+
+etudiant: numero_etudiant
+filliere_etudiant, 0N filliere_bac, 11 etudiant
+utilisateur_etudiant, 11 etudiant, 01 utilisateur 
+filliere_bac: id_filliere_bac, nom_filliere_bac
+
+utilisateur: id_utilisateur, pseudo_utilisateur, mail_utilisateur, nom_utilisateur, prenom_utilisateur, tel_utilisateur, adresse_utilisateur, est_homme, date_naissance_utilisateur, mot_de_passe_utilisateur, cle_recuperation_mdp
+a_nationalite, 11 utilisateur, 0N pays
+est_un_sous_groupe, 0N groupe, 0N groupe
+ville: code_postal, nom_ville
+personnel_est_un_utilisateur, 11 personnel, 01 utilisateur
+personnel: id_personnel, formation_personnel, mission
+
+module: reference_module, nom_module, coefficient_module, heures_cm_module, heures_td_module, heures_tp_module
+enseigne_par, 1N module, 0N enseignant
+enseignant: id_enseignant, heures_travail
+est_un_personnel, 11 enseignant, 01 personnel
+module_destiner_a_groupe, 11 module, 0N groupe
+appartient_a, 0N groupe, 0N utilisateur, 1N annee
+
+annee: annee_scolaire
+departement: id_departement, nom_departement
+directeur_departement, 0N personnel, 11 departement
+batiment: nom_batiment
+salle: id_salle, nom_salle
+type_salle: id_type, nom_type
+
+salle_est_de_type, 11 salle, 0N type_salle
+est_dans_batiment, 11 salle, 1N batiment
+seance: id_seance, date_debut_seance, duree_seance
+
+type_seance: id_type, nom_type
+seance_est_de_type, 11 seance, 0N type_seance
+seance_se_deroule_dans_salle, 0N salle, 11 seance
+seance_occupe_par_enseignant, 0N enseignant, 11 seance
+seance_de_module, 0N module, 11 seance
+seance_concerne_groupe, 0N groupe, 11 seance
+
+interro: id_interro, nom_interro, date_passage_interro, date_notes_interro
+groupe_interro, 0N groupe, 11 interro
+module_interro, 0N module, 11 interro
+etudiant_passe_interro, 0N etudiant, 1N interro
+
+depot_cours: id_depot_cours, nom_cours, lien_depot_cours, date_depot_cours, date_fin_cours, est_visible, nb_telechargement_cours
+cours_deposer_par, 0N enseignant, 11 depot_cours
+cours_destiner_a, 0N groupe, 11 depot_cours
+cours_concerne, 0N module, 11 depot_cours
+apprecier_par, 0N etudiant, 0N depot_cours, 0N appreciation: commentaire
+
+appreciation: id_appreciation, note_appreciation
+
+depot_exercice: id_depot_exercice, date_ouverture_depot_exercice, date_fermeture_depot_exercice, lien_depot_exercice
+exercice_concerne, 0N module, 11 depot_exercice
+exercice_ouvert_a, 0N groupe, 11 depot_exercice
+exercice_cree_par, 0N enseignant, 11 depot_exercice
+
+exercice_fait_par, 0N etudiant, 0N depot_exercice, 0N appreciation: note_exercice, commentaire_exercice

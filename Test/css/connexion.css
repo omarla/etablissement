@@ -1,0 +1,80 @@
+/*********************************
+* 		CORPS DE LA PAGE         *
+*								 *
+/*********************************/
+
+.connexion .connexion-form-container {
+  margin-top: 50vh;
+  transform: translateY(-50%);
+  background-image: url("../images/connexion/motif.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  /*opacity: 0.7 ;*/
+  max-width: 450px;
+  max-height: 430px;
+  min-width: 450px;
+  min-height: 430px;
+}
+
+/*********************************
+* 		       CONNEXION         *
+*								 *
+/*********************************/
+.connexion .connexion-form {
+  background-color: rgba(10, 65, 104, 0.9);
+  width: 300px;
+  height: 390px;
+  margin: auto;
+  margin-top: 20px;
+  border-radius: 5px;
+}
+
+/*********************************
+* 		       FORMULAIRE        *
+*								 *
+/*********************************/
+.connexion .logo-form {
+  margin-top: 30px;
+  width: 120px;
+  height: 120px;
+}
+
+.connexion .data-input {
+  max-width: 170px;
+  max-height: 30px;
+}
+
+/* 
+.divuser {
+  padding: 5px 55px 5px 55px;
+  margin-bottom: 10px;
+}
+
+.logouser {
+  width: 25px;
+}
+
+#boutonsubmit {
+  height: 30px;
+  width: 150px;
+  background-color: #bc4040;
+  color: white;
+  margin-left: 33%;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+
+.input {
+  display: inline-block;
+  float: right;
+}
+
+#check {
+  margin-left: 83px;
+} */
+/************************************** FIN FORMULAIRE *******************************************************/
+
+/************************************** FIN CONNEXION *******************************************************/
+
+/************************************** FIN CORPS DE PAGE ****************************************************/
