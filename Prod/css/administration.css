@@ -1,0 +1,25 @@
+.administration .admin-dropdown-list {
+  background-color: transparent;
+  padding: 0;
+  margin-left: 40px;
+}
+
+.administration .liste-symboles {
+  border: 2px solid black;
+  padding: 0px;
+  margin-top: 10px;
+}
+
+.administration .titre-symboles {
+  position: relative;
+  top: -20px;
+  width: auto;
+  display: block;
+  margin-bottom: 0px;
+}
+
+.administration .symbole {
+  position: relative;
+  top: -15px;
+  margin-bottom: 0px;
+}
