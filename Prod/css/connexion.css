@@ -2,18 +2,20 @@
 * 		CORPS DE LA PAGE         *
 *								 *
 /*********************************/
-
+.connexion {
+  height: 100vh;
+}
 .connexion .connexion-form-container {
   margin-top: 50vh;
   transform: translateY(-50%);
   background-image: url("../images/connexion/motif.png");
   background-repeat: no-repeat;
   background-position: center center;
-  /*opacity: 0.7 ;*/
-  max-width: 450px;
-  max-height: 430px;
-  min-width: 450px;
-  min-height: 430px;
+  background-size: cover;
+  max-width: 500px;
+  max-height: 500px;
+  min-width: 500px;
+  min-height: 500px;
 }
 
 /*********************************
@@ -22,11 +24,14 @@
 /*********************************/
 .connexion .connexion-form {
   background-color: rgba(10, 65, 104, 0.9);
-  width: 330px;
-  height: 400px;
+  width: 380px;
+  height: 450px;
   margin: auto;
-  margin-top: 20px;
+  margin-top: 25px;
   border-radius: 5px;
+  -webkit-box-shadow: 11px -5px 26px -4px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 11px -5px 26px -4px rgba(0, 0, 0, 0.75);
+  box-shadow: 11px -5px 26px -4px rgba(0, 0, 0, 0.75);
 }
 
 /*********************************
@@ -34,50 +39,28 @@
 *								 *
 /*********************************/
 .connexion .logo-form {
-  margin-top: 30px;
-  width: 120px;
-  height: 120px;
+  margin-top: 25px;
+  width: 140px;
+  height: 140px;
 }
 
 .connexion .data-input {
-  max-width: 180px;
-  max-height: 25px;
+  max-width: 230px;
+  max-height: 40px;
   border-radius: 0px;
   border: 0px;
-  border-bottom: 2px solid #01f816;
+  border-bottom: 2px solid rgb(198, 198, 198);
   background-color: transparent;
   color: white;
 }
-
-/* 
-.divuser {
-  padding: 5px 55px 5px 55px;
-  margin-bottom: 10px;
+.connexion .data-input:focus {
+  border-bottom-color: #01f816;
 }
 
-.logouser {
-  width: 25px;
-}
-
-#boutonsubmit {
-  height: 30px;
-  width: 150px;
-  background-color: #bc4040;
-  color: white;
-  margin-left: 33%;
+.connexion .input-image-prepend {
   margin-top: 10px;
-  margin-bottom: 20px;
-  border-radius: 5px;
 }
 
-.input {
-  display: inline-block;
-  float: right;
-}
-
-#check {
-  margin-left: 83px;
-} */
 /************************************** FIN FORMULAIRE *******************************************************/
 
 /************************************** FIN CONNEXION *******************************************************/

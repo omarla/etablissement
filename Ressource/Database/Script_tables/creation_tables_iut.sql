@@ -34,8 +34,7 @@ DROP TABLE IF EXISTS `dutinfopw201622`.`pays` ;
 
 CREATE TABLE IF NOT EXISTS `dutinfopw201622`.`pays` (
   `code_pays` VARCHAR(5) NOT NULL,
-  `nom_pays` VARCHAR(45) NOT NULL,
-  `nationalite` VARCHAR(45) NOT NULL,
+  `nom_pays` VARCHAR(45) NOT NULL
   PRIMARY KEY (`code_pays`))
 ENGINE = InnoDB;
 
@@ -43,9 +42,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `dutinfopw201622`.`Ville`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `dutinfopw201622`.`Ville` ;
+DROP TABLE IF EXISTS `dutinfopw201622`.`ville` ;
 
-CREATE TABLE IF NOT EXISTS `dutinfopw201622`.`Ville` (
+CREATE TABLE IF NOT EXISTS `dutinfopw201622`.`ville` (
   `code_postal_ville` VARCHAR(8) NOT NULL,
   `nom_ville` VARCHAR(65) NOT NULL,
   PRIMARY KEY (`code_postal_ville`))

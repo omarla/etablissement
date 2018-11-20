@@ -5,7 +5,7 @@
   Ajouter un utilisateur
 </h2>
 
-<form class="pb-2  ">
+<form class="pb-2" method="post" action="index.php?module=administration&type=utilisateur&action=inscription_utilisateur">
   <div class="form-row">
     <div class="form-group col-md-4">
       <label for="nom">Nom</label>
@@ -15,6 +15,7 @@
         id="nom"
         name="nom"
         placeholder="Toto"
+        required
       />
     </div>
     <div class="form-group col-md-4">
@@ -25,6 +26,7 @@
         id="prenom"
         name="prenom"
         placeholder="Titi"
+        required
       />
     </div>
     <div class="form-group col-md-4 ">
@@ -35,6 +37,7 @@
         id="date_naissance"
         name="date_naissance"
         placeholder="31/01/2018"
+        required
       />
     </div>
   </div>
@@ -48,6 +51,7 @@
         id="email"
         name="email"
         placeholder="email@domain.com"
+        required
       />
     </div>
     <div class="form-group col-md-6">
@@ -58,6 +62,7 @@
         id="mot_de_passe"
         name="mot_de_passe"
         placeholder="*********"
+        required
       />
     </div>
   </div>
@@ -65,7 +70,7 @@
   <div class="form-row">
     <div class="form-group col-md-4">
       <label for="civilite">civilite</label>
-      <select id="civilite" name="est_homme" class="form-control">
+      <select id="civilite" name="est_homme" class="form-control" required>
         <option value="1" selected>Monsieur</option>
         <option value="0">Madame</option>
       </select>
@@ -78,6 +83,7 @@
         id="addresse"
         name="addresse"
         placeholder="120 Rue de la nouvelle France"
+        required
       />
     </div>
   </div>
@@ -94,11 +100,13 @@
         list="codes_postal"
         class="form-control"
         id="code_postal"
+        name="code_postal"
+        required
       />
     </div>
     <div class="form-group col-md-4">
       <label for="pays_naissance" >Pays naissance</label>
-      <input id="pays_naissance" list="pays" type="text" name="pays_naissance" class="form-control">
+      <input id="pays_naissance" list="pays" type="text" name="pays_naissance" class="form-control" required>
     </div>
   </div>
 
@@ -112,42 +120,14 @@
         id="tel"
         name="tel"
         placeholder="0610203040"
+        required
       />
     </div>
     <div class="form-group col-md-4">
       <label for="filliere_bac">Fillière bac</label>
-      <select id="filliere_bac" name="est_homme" class="form-control">
-        <option value="" selected>Aucune</option>
+      <select id="filliere_bac" name="filliere_bac" required class="form-control">
       </select>
     </div>
 
     <div class="form-group col-md-4">
       <label for="droits">Droits</label>
-      <select id="droits" name="droits" class="form-control">
-        <option value="" selected>Administrateur</option>
-        <option value="S">Etudiant</option>
-        <option value="L">Enseignant</option>
-        <option value="ES">Autres</option>
-      </select>
-    </div>
-  </div>
-
-  <div class="container-fluid row justify-content-center">
-    <button type="submit" class="btn btn-outline-success ">Créer</button>
-  </div>
-
-  <!-- ----------------------DATALIST---------------------- -->
-  <datalist id="villes">
-    <option value="Paris">75017</option>
-    <option value="Gennevilliers">92230</option>
-  </datalist>
-
-  <datalist id="codes_postal">
-    <option value="Gennevilliers">92230</option>
-    <option value="Paris">75017</option>
-  </datalist>
-
-  <datalist id="pays">
-  </datalist>
-
-</form>

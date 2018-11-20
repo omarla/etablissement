@@ -26,8 +26,8 @@
         public function seConnecter()
         {
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                $username = isset($_POST['username']) ? $_POST['username'] :setError(UNDEFINED_USERNAME_ERROR);
-                $password = isset($_POST['password']) ? $_POST['username'] : setError(UNDEFINED_PASSWORD_ERROR);
+                $username = isset($_POST['username']) ? $_POST['username'] : $this->setError(UNDEFINED_USERNAME_ERROR);
+                $password = isset($_POST['password']) ? $_POST['username'] : $this->setError(UNDEFINED_PASSWORD_ERROR);
 
                 $this->modele->connect($username, $password);
             }

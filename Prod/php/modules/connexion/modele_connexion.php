@@ -21,12 +21,17 @@
             try {
                 $stmt->execute();
                 $row = $stmt->fetch(PDO::FETCH_ASSOC);
-                print_r($row);
             } catch (PDOException $e) {
-                header('Location: index.php?module=error&title='.DATABASE_ERROR_TITLE.'&message='.DATABASE_ERROR_MESSAGE);
+                $this->handleError($e->errorInfo[1]);
+                header('Location: index.php?module=connexion&action=afficherConnexion');
             }
         }
     
+        public function handleError($error_code)
+        {
+            $_SESSION['erreur']['connexion'] = ERROR_MESSAGE_USING_SQL_CODE[$error_code];
+        }
+
         public function sign_in($utilisateur, $personnel, $enseignant, $etudiant)
         {
         }

@@ -4,22 +4,10 @@
   margin-left: 40px;
 }
 
-.administration .liste-symboles {
-  border: 2px solid black;
-  padding: 0px;
-  margin-top: 10px;
-}
 
-.administration .titre-symboles {
-  position: relative;
-  top: -20px;
-  width: auto;
-  display: block;
-  margin-bottom: 0px;
-}
 
-.administration .symbole {
-  position: relative;
-  top: -15px;
-  margin-bottom: 0px;
+.administration .content {
+  background-color: rgba(253, 253, 253, 0.63);
+  padding-bottom: 10px;
+  height: fit-content;
 }
