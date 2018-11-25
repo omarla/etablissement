@@ -40,8 +40,8 @@
                     $cont->afficherModifierPersonnel();
                 break;
 
-                case 'rendreEnseignant':
-                    $cont->rendreEnseignant();
+                case 'modifier_personnel':
+                    $cont->modifierPersonnel();
                 break;
 
                 default:

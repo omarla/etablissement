@@ -272,4 +272,9 @@
 
             require_once __DIR__ . "/html/personnel/afficher_liste_personnel_2.php";
         }
+
+        public function modifierPersonnel($personnel)
+        {
+            require_once __DIR__ . "/html/personnel/test_personnel.php";
+        }
     }

@@ -31,3 +31,9 @@ form .input-image-prepend {
 fieldset {
   border: 2px solid black;
 }
+
+.table-input {
+  width: 80px;
+  margin: auto auto;
+  height: 30px;
+}

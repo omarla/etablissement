@@ -111,7 +111,15 @@
 
             $personnel = $this->modele->getPersonnel($id);
 
-            print_r($personnel);
-            // $this->vue->modifierPersonnel($personnel);
+            $this->vue->modifierPersonnel($personnel);
+        }
+
+        public function modifierPersonnel()
+        {
+            $id_personnel = isset($_GET['id']) ? $_GET['id'] : die('');
+            $est_enseignant = isset($_GET['est_enseignant']) ? $_GET['est_enseignant'] == 'on' : false;
+            $heures_travail = isset($_GET['heures_travail']) ? $_GET['heures_travail'] : die('');
+
+            $this->modele->modifierPersonnel($id_personnel, $est_enseignant, $heures_travail);
         }
     }

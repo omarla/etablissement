@@ -29,6 +29,10 @@
                                             where personnel.id_personnel = ?
                                             group by utilisateur.id_utilisateur, personnel.id_personnel, num_enseignant ';
         
+
+        private const personalWorkQuery = 'select * from heures_travail where num_enseignant = ?';
+        
+
         private const rolesListQuery    = 'select nom_droits from droits';
        
         private const insertUserQuery   = 'insert into utilisateur values(default, ?, ?, ?,
@@ -153,6 +157,10 @@
             } catch (PDOException $e) {
                 //TODO
             }
+        }
+
+        public function getHeuresTravailPersonnel($id){
+            $stmt = self::$db->prepare(self::)
         }
 
         public function getListeDroits()
@@ -282,6 +290,17 @@
             }
         }
 
+
+        /****************************************************************************************************/
+        /****************************************FIN INSERTIONS**********************************************/
+        /****************************************************************************************************/
+
+
+        /****************************************************************************************************/
+        /****************************************MODIFICATIONS***********************************************/
+        /****************************************************************************************************/
+
+
         public function modifierUtilisateur($data, $id)
         {
             $keyList = array('email','nom', 'prenom', 'tel', 'addresse', 'est_homme', 'date_naissance', 'droits', 'filliere_bac', 'pays_naissance', 'code_postal');
@@ -319,7 +338,7 @@
         }
 
 
-        public function rendreEnseignant($id_personnel)
+        public function modifierPersonnel($id_personnel, $est_enseignant, $heures_travail)
         {
             $stmtEnseignant = self::$db->prepare(self::insertEnseignantQuery);
                     
@@ -332,6 +351,11 @@
                 echo $e->getMessage();
             }
         }
+
+
+        /****************************************************************************************************/
+        /****************************************FIN_MODIFICATIONS*******************************************/
+        /****************************************************************************************************/
 
         public function supprimerEnseignant($id_personnel)
         {
