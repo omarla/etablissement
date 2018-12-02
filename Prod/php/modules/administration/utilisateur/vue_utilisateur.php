@@ -1,24 +1,12 @@
 <?php
     require_once "php/verify.php";
-    
-    class VueUtilisateur
+    require_once "php/common/vue_generique.php";
+
+    class VueUtilisateur extends VueGenerique
     {
         public function __construct()
         {
         }
-
-
-        private function afficherListeDroits($droits, $value = '')
-        {
-            echo '<select id="droits" value="'.$value.'" name="droits" class="form-control" required>';
-            $first = false;
-            foreach ($droits as $droit) {
-                echo "<option value='${droit}'>${droit}</option>";
-            }
-
-            echo '</select>';
-        }
-
 
 
         /****************************************************************************************************/
@@ -147,7 +135,7 @@
                         id='civilite' 
                         name='est_homme' 
                         class='form-control' 
-                        value='value='${utilisateur['est_homme']}'
+                        value='value='${utilisateur['est_homme_utilisateur']}'
                         required>
                       <option value='1'>Monsieur</option>
                       <option value='0'>Madame</option>
@@ -203,7 +191,7 @@
                 </div>
               
                 <div class='form-row'>
-                  <div class='form-group col-md-4'>
+                  <div class='form-group col-md-6'>
                     <label for='tel'>Numéro de telephone</label>
                     <input
                       type='tel'
@@ -216,19 +204,8 @@
                       required
                     />
                   </div>
-                  <div class='form-group col-md-4'>
-                    <label for='filliere_bac'>Fillière bac</label>
-                    <select 
-                        id='filliere_bac' 
-                        name='filliere_bac' 
-                        value='${utilisateur['id_filliere_bac']}'
-                        class='form-control'
-                        required 
-                        >
-                    </select>
-                  </div>
               
-                  <div class='form-group col-md-4'>
+                  <div class='form-group col-md-6 '>
                     <label for='droits'>Droits</label>
                 ";
                 $this->afficherListeDroits($liste_droits, '');
@@ -275,6 +252,64 @@
 
         public function modifierPersonnel($personnel)
         {
-            require_once __DIR__ . "/html/personnel/test_personnel.php";
+            $heures_travail_courants = includesAt($personnel['heures_travail'], 'annee', 'heures_travail', $personnel['annee_courante'], 0);
+            $est_enseignant = $personnel['id_enseignant'] === null ? '' : 'checked' ;
+            
+            echo '
+            <h2 class="text-center text-dark underline mb-4 pt-2 " style="text-decoration:underline">
+                Modifier '.$personnel["pseudo_utilisateur"] . '
+            </h2>
+    
+            <form class="pb-2" method="post" action="index.php?module=administration&type=utilisateur&action=modifier_personnel&id='.$personnel['id_personnel'].'">
+            
+                <div class="justify-content-center row container-fluid">
+                    <table class="table table-striped text-center table-hover table-bordered col-md-6 col-lg-5">
+                        <thead class="thead-dark ">
+                            <tr>
+                                <th>Année</th>
+                                <th>Heures travaillée</th>
+                            </tr>
+                        </thead>
+            
+                        <tbody>
+                            <tr>
+                                <td>'.$personnel['annee_courante'].'</td>
+                                <td>
+                                    <input type="number" min="0" value="' .$heures_travail_courants . '" class="form-control table-input" name="heures_travail" />
+                                </td>
+                            </tr>';
+
+
+
+            foreach ($personnel['heures_travail'] as $heures_travail) {
+                if ($heures_travail['annee'] != $personnel['annee_courante']) {
+                    echo "<tr>
+                            <td>${heures_travail['annee']}</td>
+                            <td>${heures_travail['heures_travail']}</td>
+                          </tr>";
+                }
+            }
+
+
+                          
+            echo
+            '</tbody>
+                  </table>
+              </div>
+          
+              <div class="container-fluid row justify-content-center">
+                  <div class="pt-2 col-auto">
+                      <input type="checkbox" name="estEnseignant" '. $est_enseignant .' id="estEnseignant" />
+                      <label for="estEnseignant">Est Enseignant</label>
+                  </div>
+              </div>
+          
+          
+              <div class="container-fluid row justify-content-sm-center justify-content-around">
+                  <button name="modification" class="btn btn-outline-success mr-sm-5">Valider</button>
+                  <button name="suppression" class="btn btn-outline-danger ml-sm-5 ">Supprimer</button>
+              </div>
+          
+          </form>';
         }
     }

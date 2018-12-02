@@ -2,7 +2,7 @@
   Liste des utilisateurs
 </h2>
 
-<table class="table table-striped table-hover">
+<table id="data-table" class="small-table table table-striped table-hover">
   <thead class="thead-dark">
     <tr>
       <th scope="col">#</th>

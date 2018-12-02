@@ -1,5 +1,7 @@
 <?php
     require_once __DIR__ . "/utilisateur/mod_utilisateur.php";
+    require_once __DIR__ . "/droits/mod_droits.php";
+    require_once __DIR__ . "/groupe/mod_groupe.php";
 
     class ModAdministration
     {
@@ -13,7 +15,15 @@
                 case 'utilisateur':
                     $mod = new ModUtilisateur();
                 break;
-                
+
+                case 'droits':
+                    $mod = new ModDroits();
+                break;
+
+                case 'groupe':
+                    $mod = new ModGroupe();
+                break;
+
                 default:
                     header("Location: index.php?module=error&title=action invalide&message=".INVALID_ACTION_ERROR_MESSAGE);
             }

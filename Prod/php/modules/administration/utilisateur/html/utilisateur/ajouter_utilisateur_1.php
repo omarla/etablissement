@@ -111,7 +111,8 @@
   </div>
 
   <div class="form-row">
-    <div class="form-group col-md-4">
+
+    <div class="form-group col-md-6">
       <label for="tel">Numéro de telephone</label>
       <input
         type="tel"
@@ -123,11 +124,6 @@
         required
       />
     </div>
-    <div class="form-group col-md-4">
-      <label for="filliere_bac">Fillière bac</label>
-      <select id="filliere_bac" name="filliere_bac" required class="form-control">
-      </select>
-    </div>
 
-    <div class="form-group col-md-4">
+    <div class="form-group col-md-6">
       <label for="droits">Droits</label>

@@ -2,7 +2,7 @@
   Liste des personnels
 </h2>
 
-<table class="table table-striped table-hover">
+<table id="data-table" class="small-table table table-striped table-hover">
   <thead class="thead-dark">
     <tr>
       <th scope="col" class="text-center">Id</th>

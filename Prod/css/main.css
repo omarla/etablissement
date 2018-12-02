@@ -1,3 +1,7 @@
+html {
+  height: -webkit-fill-available;
+}
+
 body {
   max-width: 1080px;
   height: 100vh;
@@ -36,4 +40,13 @@ fieldset {
   width: 80px;
   margin: auto auto;
   height: 30px;
+}
+
+.small-input {
+  height: 30px;
+
+}
+
+.small-table {
+  font-size: 14px;
 }

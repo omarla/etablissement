@@ -22,9 +22,7 @@ CREATE TABLE utilisateur(
         date_creation_utilisateur    Date NOT NULL ,
         code_pays                    Varchar (3) NOT NULL ,
         nom_droits                   Varchar (40) NOT NULL ,
-        num_etudiant                 Varchar (25) ,
         code_postal_ville            Varchar (5) ,
-        id_personnel                 Int ,
         PRIMARY KEY (id_utilisateur ) ,
         UNIQUE (pseudo_utilisateur ,mail_utilisateur )
 )ENGINE=InnoDB;
@@ -77,7 +75,7 @@ CREATE TABLE groupe(
 
 CREATE TABLE etudiant(
         num_etudiant   Varchar (25) NOT NULL ,
-        id_utilisateur Int ,
+        id_utilisateur Int NOT NULL UNIQUE ,
         PRIMARY KEY (num_etudiant )
 )ENGINE=InnoDB;
 
@@ -111,7 +109,7 @@ CREATE TABLE annee(
 
 CREATE TABLE ville(
         code_postal_ville Varchar (5) NOT NULL ,
-        nom_ville         Varchar (50) ,
+        nom_ville         Varchar (50) NOT NULL,
         PRIMARY KEY (code_postal_ville )
 )ENGINE=InnoDB;
 
@@ -122,7 +120,7 @@ CREATE TABLE ville(
 
 CREATE TABLE personnel(
         id_personnel   int (11) Auto_increment  NOT NULL ,
-        id_utilisateur Int ,
+        id_utilisateur Int NOT NULL UNIQUE,
         PRIMARY KEY (id_personnel )
 )ENGINE=InnoDB;
 
@@ -133,6 +131,7 @@ CREATE TABLE personnel(
 
 CREATE TABLE enseignant(
         id_enseignant int (11) Auto_increment  NOT NULL ,
+        id_personnel int (11) NOT NULL UNIQUE,
         PRIMARY KEY (id_enseignant )
 )ENGINE=InnoDB;
 
@@ -150,7 +149,7 @@ CREATE TABLE cours(
         cours_est_cachee      Bool NOT NULL ,
         nb_consultation_cours Int NOT NULL ,
         id_enseignant         Int NOT NULL ,
-        ref_module            Varchar (80) ,
+        ref_module            Varchar (80) NOT NULL,
         PRIMARY KEY (id_cours )
 )ENGINE=InnoDB;
 
@@ -192,7 +191,7 @@ CREATE TABLE seance(
         id_seance           int (11) Auto_increment  NOT NULL ,
         heure_depart_seance Time NOT NULL ,
         duree_seance        Time NOT NULL ,
-        id_jours_ouverture  Int ,
+        id_jours_ouverture  int NOT NULL,
         ref_module          Varchar (80) ,
         nom_type_seance     Varchar (50) NOT NULL ,
         PRIMARY KEY (id_seance )
@@ -216,7 +215,7 @@ CREATE TABLE type_seance(
 
 CREATE TABLE salle(
         nom_salle      Varchar (8) NOT NULL ,
-        nom_type_salle Varchar (25) ,
+        nom_type_salle Varchar (25) NOT NULL,
         PRIMARY KEY (nom_salle )
 )ENGINE=InnoDB;
 
@@ -318,8 +317,8 @@ CREATE TABLE membres_de_groupe(
 #------------------------------------------------------------
 
 CREATE TABLE sous_groupe(
-        id_groupe   Int NOT NULL ,
-        id_groupe_1 Int NOT NULL ,
+        id_groupe_parent   Int NOT NULL ,
+        id_groupe_enfant Int NOT NULL ,
         PRIMARY KEY (id_groupe ,id_groupe_1 )
 )ENGINE=InnoDB;
 
@@ -337,16 +336,6 @@ CREATE TABLE etudie_en(
         PRIMARY KEY (annee ,num_etudiant ,ref_semestre )
 )ENGINE=InnoDB;
 
-
-#------------------------------------------------------------
-# Table: enseignant_est_personnel
-#------------------------------------------------------------
-
-CREATE TABLE enseignant_est_personnel(
-        id_personnel  Int NOT NULL ,
-        id_enseignant Int NOT NULL ,
-        PRIMARY KEY (id_personnel ,id_enseignant )
-)ENGINE=InnoDB;
 
 
 #------------------------------------------------------------
@@ -497,9 +486,7 @@ CREATE TABLE destinataire_mail(
 
 ALTER TABLE utilisateur ADD CONSTRAINT FK_utilisateur_code_pays FOREIGN KEY (code_pays) REFERENCES pays(code_pays);
 ALTER TABLE utilisateur ADD CONSTRAINT FK_utilisateur_nom_droits FOREIGN KEY (nom_droits) REFERENCES droits(nom_droits);
-ALTER TABLE utilisateur ADD CONSTRAINT FK_utilisateur_num_etudiant FOREIGN KEY (num_etudiant) REFERENCES etudiant(num_etudiant);
 ALTER TABLE utilisateur ADD CONSTRAINT FK_utilisateur_code_postal_ville FOREIGN KEY (code_postal_ville) REFERENCES ville(code_postal_ville);
-ALTER TABLE utilisateur ADD CONSTRAINT FK_utilisateur_id_personnel FOREIGN KEY (id_personnel) REFERENCES personnel(id_personnel);
 ALTER TABLE groupe ADD CONSTRAINT FK_groupe_nom_droits FOREIGN KEY (nom_droits) REFERENCES droits(nom_droits);
 ALTER TABLE etudiant ADD CONSTRAINT FK_etudiant_id_utilisateur FOREIGN KEY (id_utilisateur) REFERENCES utilisateur(id_utilisateur);
 ALTER TABLE personnel ADD CONSTRAINT FK_personnel_id_utilisateur FOREIGN KEY (id_utilisateur) REFERENCES utilisateur(id_utilisateur);
@@ -518,13 +505,12 @@ ALTER TABLE mail ADD CONSTRAINT FK_mail_id_utilisateur FOREIGN KEY (id_utilisate
 ALTER TABLE reponse_mail ADD CONSTRAINT FK_reponse_mail_id_mail FOREIGN KEY (id_mail) REFERENCES mail(id_mail);
 ALTER TABLE membres_de_groupe ADD CONSTRAINT FK_membres_de_groupe_id_groupe FOREIGN KEY (id_groupe) REFERENCES groupe(id_groupe);
 ALTER TABLE membres_de_groupe ADD CONSTRAINT FK_membres_de_groupe_id_utilisateur FOREIGN KEY (id_utilisateur) REFERENCES utilisateur(id_utilisateur);
-ALTER TABLE sous_groupe ADD CONSTRAINT FK_sous_groupe_id_groupe FOREIGN KEY (id_groupe) REFERENCES groupe(id_groupe);
-ALTER TABLE sous_groupe ADD CONSTRAINT FK_sous_groupe_id_groupe_1 FOREIGN KEY (id_groupe_1) REFERENCES groupe(id_groupe);
+ALTER TABLE sous_groupe ADD CONSTRAINT FK_sous_groupe_id_groupe FOREIGN KEY (id_groupe_parent) REFERENCES groupe(id_groupe);
+ALTER TABLE sous_groupe ADD CONSTRAINT FK_sous_groupe_id_groupe_1 FOREIGN KEY (id_groupe_enfant) REFERENCES groupe(id_groupe);
 ALTER TABLE etudie_en ADD CONSTRAINT FK_etudie_en_annee FOREIGN KEY (annee) REFERENCES annee(annee);
 ALTER TABLE etudie_en ADD CONSTRAINT FK_etudie_en_num_etudiant FOREIGN KEY (num_etudiant) REFERENCES etudiant(num_etudiant);
 ALTER TABLE etudie_en ADD CONSTRAINT FK_etudie_en_ref_semestre FOREIGN KEY (ref_semestre) REFERENCES semestre(ref_semestre);
-ALTER TABLE enseignant_est_personnel ADD CONSTRAINT FK_enseignant_est_personnel_id_personnel FOREIGN KEY (id_personnel) REFERENCES personnel(id_personnel);
-ALTER TABLE enseignant_est_personnel ADD CONSTRAINT FK_enseignant_est_personnel_id_enseignant FOREIGN KEY (id_enseignant) REFERENCES enseignant(id_enseignant);
+ALTER TABLE enseignant ADD CONSTRAINT FK_enseignant_est_personnel_id_enseignant FOREIGN KEY (id_personnel) REFERENCES personnel(id_personnel);
 ALTER TABLE heures_travail ADD CONSTRAINT FK_heures_travail_annee FOREIGN KEY (annee) REFERENCES annee(annee);
 ALTER TABLE heures_travail ADD CONSTRAINT FK_heures_travail_id_personnel FOREIGN KEY (id_personnel) REFERENCES personnel(id_personnel);
 ALTER TABLE module_enseigne_par ADD CONSTRAINT FK_module_enseigne_par_id_enseignant FOREIGN KEY (id_enseignant) REFERENCES enseignant(id_enseignant);

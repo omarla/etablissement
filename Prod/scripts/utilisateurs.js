@@ -6,11 +6,12 @@ $(document)
     let start = $(this).val();
 
     $.ajax({
-      url: "php/api/places.php",
+      url: "php/api/index.php",
       async: true,
       method: "GET",
       data: {
-        type: "ville",
+        type: "utilisateur",
+        action: "ville",
         start: start
       },
       success: function (data) {
@@ -21,8 +22,10 @@ $(document)
   }) //Action a éxécuter en cas du choix d'une ville
   .on("focusout", "#ville", function (event) {
     let options = document.getElementById("villes").options;
-    if (options.length > 0 && options[0].value.toLowerCase() === $(this).val().toLowerCase())
+    if (options.length > 0 && options[0].value.toLowerCase() === $(this).val().toLowerCase()) {
+      $(this).val($(this).val().toUpperCase());
       $("#code_postal").val(options[0].innerHTML);
+    }
   });
 
 //Récupérer la liste des codes_postal correspondantes à la recherche
@@ -31,11 +34,12 @@ $(document)
     let start = $(this).val();
 
     $.ajax({
-      url: "php/api/places.php",
+      url: "php/api/index.php",
       async: true,
       method: "GET",
       data: {
-        type: "code_postal",
+        type: "utilisateur",
+        action: "code_postal",
         start: start
       },
       success: function (data) {
@@ -59,11 +63,12 @@ $(document).on("keyup", "#pays_naissance", function (event) {
   let start = $(this).val();
 
   $.ajax({
-    url: "php/api/places.php",
+    url: "php/api/index.php",
     async: true,
     method: "GET",
     data: {
-      type: "pays",
+      type: "utilisateur",
+      action: "pays",
       start: start
     },
     success: function (data) {
@@ -78,11 +83,12 @@ $(document).on("keyup", "input#pseudo", function (event) {
   let start = $(this).val();
 
   $.ajax({
-    url: "php/api/userData.php",
+    url: "php/api/index.php",
     async: true,
     method: "GET",
     data: {
-      type: "pseudo",
+      type: "utilisateur",
+      action: "pseudo",
       start: start
     },
     success: function (data) {
@@ -93,26 +99,15 @@ $(document).on("keyup", "input#pseudo", function (event) {
 }).on("focusout", "input#pseudo", function (event) {
   let options = document.getElementById("pseudo_list").options;
 
-  if (options.length == 0 || options[0].value.toLowerCase() !== $(this).val().toLowerCase())
+  if (options.length == 0 || options[0].value.toLowerCase() !== $(this).val().toLowerCase()) {
     $("#pseudo").val('');
+    toastr.error("Cet utilisateur n'existe pas ou il est déjà un personnel");
+  }
 
 });;
 
 
 
-$.ajax({
-  url: "php/api/fillieres_bac.php",
-  async: true,
-  method: "GET",
-  success: function (data) {
-    setDataListItems(
-      $("#filliere_bac"),
-      data,
-      "id_filliere_bac",
-      "id_filliere_bac"
-    );
-  }
-});
 
 
 function setDataListItems(datalist, data, valueName, htmlTextName) {

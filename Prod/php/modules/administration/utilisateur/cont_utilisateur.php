@@ -35,7 +35,7 @@
 
         public function inscription()
         {
-            $keyList = array('email','nom', 'prenom', 'tel', 'addresse', 'est_homme', 'date_naissance', 'mot_de_passe','droits', 'filliere_bac', 'pays_naissance', 'code_postal');
+            $keyList = array('email','nom', 'prenom', 'tel', 'addresse', 'est_homme', 'date_naissance', 'mot_de_passe','droits',  'pays_naissance', 'code_postal');
             
             if (checkArrayForKeys($keyList, $_POST)) {
                 $data = $_POST;
@@ -60,7 +60,7 @@
 
         public function modifierUtilisateur()
         {
-            $required_key = array('email','nom', 'prenom', 'tel', 'addresse', 'est_homme', 'date_naissance','droits', 'filliere_bac', 'pays_naissance', 'code_postal');
+            $required_key = array('email','nom', 'prenom', 'tel', 'addresse', 'est_homme', 'date_naissance','droits', 'pays_naissance', 'code_postal');
 
             if (checkArrayForKeys($required_key, $_POST) && isset($_GET['id'])) {
                 $id = $_GET['id'];
@@ -97,13 +97,6 @@
             $this->modele->ajouterPersonnel($pseudo, $estEnseignant);
         }
 
-        public function rendreEnseignant()
-        {
-            $id = isset($_GET['id']) ? $_GET['id'] : die('Id incorrecte');
-
-            $this->modele->rendreEnseignant($id);
-        }
-
 
         public function afficherModifierPersonnel()
         {
@@ -117,9 +110,13 @@
         public function modifierPersonnel()
         {
             $id_personnel = isset($_GET['id']) ? $_GET['id'] : die('');
-            $est_enseignant = isset($_GET['est_enseignant']) ? $_GET['est_enseignant'] == 'on' : false;
-            $heures_travail = isset($_GET['heures_travail']) ? $_GET['heures_travail'] : die('');
+            $est_enseignant = isset($_POST['estEnseignant']) ? $_POST['estEnseignant'] === 'on' : false;
+            $heures_travail = isset($_POST['heures_travail']) ? $_POST['heures_travail'] : die('');
 
-            $this->modele->modifierPersonnel($id_personnel, $est_enseignant, $heures_travail);
+            if (isset($_POST['modification'])) {
+                $this->modele->modifierPersonnel($id_personnel, $est_enseignant, $heures_travail);
+            } elseif (isset($_POST['suppression'])) {
+                $this->modele->supprimerPersonnel($id_personnel);
+            }
         }
     }

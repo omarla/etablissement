@@ -18,3 +18,5 @@ CREATE FUNCTION connect_user(pseudo varchar(45), mot_de_passe varchar(60)) retur
         RETURN id;
     END$$
 DELIMITER ;
+
+

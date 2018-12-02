@@ -13,11 +13,11 @@
             $start = isset($_GET['start']) ? strtolower($_GET['start']) . '%' : Response::send_error(HTTP_BAD_REQUEST, 'Paramètre start est absent');
             $query = null;
             if ($_GET['type'] === 'ville') {
-                $query = "select * from Ville where lower(nom_ville) like concat('%',:start)";
+                $query = "select * from ville where lower(nom_ville) like concat('%',:start)";
             } elseif ($_GET['type'] === 'pays') {
                 $query = "select code_pays, nom_pays from pays where lower(nom_pays) like concat('%', :start)";
             } elseif ($_GET['type'] === 'code_postal') {
-                $query = "select * from Ville where lower(code_postal_ville) like :start";
+                $query = "select * from ville where lower(code_postal_ville) like :start";
             } else {
                 Response::send_error(HTTP_BAD_REQUEST, "Ce type de requête est inconnu");
             }

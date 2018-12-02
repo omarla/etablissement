@@ -1,5 +1,7 @@
 <?php
     require_once __DIR__ . "/cont_utilisateur.php";
+    require_once "php/verify.php";
+
     class ModUtilisateur
     {
         public function __construct()
@@ -43,6 +45,7 @@
                 case 'modifier_personnel':
                     $cont->modifierPersonnel();
                 break;
+
 
                 default:
                     header("Location: index.php?module=error&title=action invalide&message=".INVALID_ACTION_ERROR_MESSAGE);

@@ -6,7 +6,7 @@
 
     class CityUploader extends Database
     {
-        private const insertQuery = "insert into Ville values (:code_postal, :nom_ville)";
+        private const insertQuery = "insert into ville values (:code_postal, :nom_ville)";
         public function insert()
         {
             $filename = __DIR__ . "/resource/laposte_hexasmal.csv";

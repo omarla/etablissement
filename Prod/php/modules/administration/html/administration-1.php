@@ -7,7 +7,6 @@
                     Utilisateurs
                 </button>
             </a>
-
             <a href="index.php?module=administration&type=utilisateur&action=liste_personnels">
                 <button type="button" class=" list-group-item list-group-item-action">
                     Personnel
@@ -18,14 +17,18 @@
                 Etudiant
             </button>
 
-            <button type="button" class=" list-group-item list-group-item-action">
-                Groupes
-            </button>
+            <a href="index.php?module=administration&type=groupe&action=liste_groupes">
+                <button type="button" class=" list-group-item list-group-item-action">
+                    Groupes
+                </button>
+            </a>
 
-            <button type="button" class="list-group-item list-group-item-action">
-                Droits
-            </button>
 
+            <a href="index.php?module=administration&type=droits&action=liste_droits">
+                <button type="button" class=" list-group-item list-group-item-action">
+                    Droits
+                </button>
+            </a>
             <button type="button" class="list-group-item list-group-item-action">
                 Modules
             </button>
