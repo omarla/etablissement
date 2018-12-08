@@ -105,22 +105,3 @@ $(document).on("keyup", "input#pseudo", function (event) {
   }
 
 });;
-
-
-
-
-
-function setDataListItems(datalist, data, valueName, htmlTextName) {
-  data = JSON.parse(data);
-
-  let i = 0;
-
-  datalist.empty();
-
-  while (i < MAX_OPTIONS && i < data.length) {
-    datalist.append(
-      `<option value='${data[i][valueName]}'>${data[i][htmlTextName]}</option>`
-    );
-    i++;
-  }
-}

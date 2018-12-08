@@ -27,11 +27,30 @@
         {
             $nom_groupe = isset($_POST['nom_groupe']) ? $_POST['nom_groupe'] : die('Nom groupe');
             $nom_droits = isset($_POST['droits']) ? $_POST['droits'] : die('nom droits');
-            print_r($_POST);
 
             $this->modele->ajouterGroupe($nom_groupe, $nom_droits);
         
             header('Location: index.php?module=administration&type=groupe&action=liste_groupes');
+        }
+
+        public function ajouterSousGroupe()
+        {
+            $id_groupe = isset($_GET['id_groupe']) ? $_GET['id_groupe'] : die('Id invalide');
+            $id_groupe_fils = isset($_POST['groupe_fils']) ? $_POST['groupe_fils'] : die('Groupe fils invalid');
+
+            $this->modele->ajouterSousGroupe($id_groupe_fils, $id_groupe);
+
+            header('Location: index.php?module=administration&type=groupe&action=afficher_modification&id='.$id_groupe);
+        }
+
+        public function ajouterUtilisateur()
+        {
+            $id_groupe = isset($_GET['id_groupe']) ? $_GET['id_groupe'] : die('Id invalide');
+            $pseudo_utilisateur = isset($_POST['pseudo_utilisateur']) ? $_POST['pseudo_utilisateur'] : die('Groupe fils invalid');
+
+            $this->modele->ajouterUtilisateur($pseudo_utilisateur, $id_groupe);
+
+            header('Location: index.php?module=administration&type=groupe&action=afficher_modification&id='.$id_groupe);
         }
 
 

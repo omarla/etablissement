@@ -47,6 +47,7 @@
                 break;
 
 
+
                 default:
                     header("Location: index.php?module=error&title=action invalide&message=".INVALID_ACTION_ERROR_MESSAGE);
             }

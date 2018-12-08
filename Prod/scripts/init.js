@@ -17,4 +17,26 @@ toastr.options = {
 
 $(document).ready(function () {
     $('#data-table').DataTable();
+
+    $('.data-table').each(function (index) {
+        $(this).DataTable();
+    })
+
+
+
 });
+
+function setDataListItems(datalist, data, valueName, htmlTextName) {
+    data = JSON.parse(data);
+
+    let i = 0;
+
+    datalist.empty();
+
+    while (i < MAX_OPTIONS && i < data.length) {
+        datalist.append(
+            `<option value='${data[i][valueName]}'>${data[i][htmlTextName]}</option>`
+        );
+        i++;
+    }
+}

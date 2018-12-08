@@ -16,7 +16,7 @@
         {
             $requete = "select pseudo_utilisateur, id_utilisateur from utilisateur 
                         where id_utilisateur not in (select id_utilisateur from membres_de_groupe where id_groupe = :id_groupe)
-                        and lower(pseudo_utilisateur) like :debut";
+                        and lower(pseudo_utilisateur) like concat('%',:debut)";
         
             $stmt = self::$db->prepare($requete);
 

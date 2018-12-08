@@ -2,6 +2,7 @@
     require_once __DIR__ . "/utilisateur/mod_utilisateur.php";
     require_once __DIR__ . "/droits/mod_droits.php";
     require_once __DIR__ . "/groupe/mod_groupe.php";
+    require_once __DIR__ . "/semestre/mod_semestre.php";
 
     class ModAdministration
     {
@@ -24,6 +25,10 @@
                     $mod = new ModGroupe();
                 break;
 
+                case 'semestre':
+                    $mod = new ModSemestre();
+                break;
+                
                 default:
                     header("Location: index.php?module=error&title=action invalide&message=".INVALID_ACTION_ERROR_MESSAGE);
             }

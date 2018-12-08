@@ -17,7 +17,20 @@
                 case 'ajouter_groupe':
                     $cont->ajouterGroupe();
                 break;
+
+                case 'ajouter_sous_groupe':
+                    $cont->ajouterSousGroupe();
+                break;
+
+                case 'ajouter_utilisateur':
+                    $cont->ajouterUtilisateur();
+                break;
+
                 
+                case 'ajouter_utilisateur':
+                    $cont->ajouterUtilisateur();
+                break;
+
                 case 'afficher_modification':
                     $cont->afficherModification();
                 break;

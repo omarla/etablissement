@@ -83,6 +83,7 @@
     <script src="http://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="scripts/init.js"></script>    
     <script src="scripts/utilisateurs.js"></script>
+    <script src="scripts/groupe.js"></script>
 
 </body>
 </html>

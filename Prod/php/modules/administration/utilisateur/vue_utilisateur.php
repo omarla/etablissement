@@ -29,10 +29,6 @@
         {
             require_once __DIR__ . "/html/utilisateur/afficher_utilisateurs_1.php";
             
-            if (count($liste_utilisateurs) == 0) {
-                echo "<tr><td colspan=6 class='text-center text-secondary'> Aucun utilisateur n'a été trouvé </td></tr>";
-            }
-
             foreach ($liste_utilisateurs as $utilisateur) {
                 echo "            
                     
@@ -226,9 +222,6 @@
         {
             require_once __DIR__ . "/html/personnel/afficher_liste_personnel_1.php";
   
-            if (count($liste_personnels) == 0) {
-                echo "<tr><td colspan=6 class='text-center text-secondary'> Aucun personnel n'a été trouvé </td></tr>";
-            }
 
             foreach ($liste_personnels as $personnel) {
                 echo "            

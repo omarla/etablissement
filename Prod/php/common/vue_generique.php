@@ -43,28 +43,116 @@
             echo '</select>';
         }
 
-        public function transformerEnTableauSuppression($tableau, $cles, $cle_suppression, $debut_lien_suppression, $message_introuvable = "Aucun élément n'a été trouvé")
+        public function transformerEnTableauSuppression($tableau, $cles, $cle_suppression, $debut_lien_suppression, $condition_suppression = null)
         {
             $html = "";
 
-            if (count($tableau) == 0) {
-                $html .= '<tr ><td colspan='.(count($cles) + 1) .' class="text-secondary text-center">'. $message_introuvable.'</td></tr>';
-            }
+
 
             foreach ($tableau as $ligne) {
                 $html .= "<tr>";
+                
                 foreach ($cles as $cle) {
                     $html .= "<td>${ligne[$cle]}</td>";
                 }
 
-
-                $html .= "<td><a href='${debut_lien_suppression}${ligne[$cle_suppression]}'>
-                            <button class='btn btn-sm btn-outline-danger px-2 py-0'>Supprimer</button>
-                         </a></td>";
+                if ($condition_suppression || $condition_suppression($ligne)) {
+                    $html .= "<td><a href='${debut_lien_suppression}${ligne[$cle_suppression]}'>
+                                <button class='btn btn-sm btn-outline-danger px-2 py-0'>Supprimer</button>
+                            </a></td>";
+                } else {
+                    $html .= "<td>
+                                <button disabled class='btn btn-sm btn-outline-danger px-2 py-0'>Supprimer</button>
+                              </td>";
+                }
 
                 $html .= "</tr>";
             }
 
             return $html;
+        }
+
+
+        public function afficherTableauSuppression($tableau, $cles, $cle_suppression, $debut_lien_suppression, $enTete = null, $condition_suppression = null, $classe_enTete = 'thead-dark', $message_introuvable = "Aucun élément n'a été trouvé")
+        {
+            if ($enTete == null) {
+                $enTete = $cles;
+            }
+
+            $headerHTML = "<tr>";
+            
+            foreach ($enTete as $cleEntete) {
+                $headerHTML .= "<th scope='col'>${cleEntete}</th>";
+            }
+            $headerHTML .= "<th scope='col'>supprimer</th>";
+
+            $headerHTML .= '</tr>';
+
+
+            $htmlBody = $this->transformerEnTableauSuppression($tableau, $cles, $cle_suppression, $debut_lien_suppression, $message_introuvable, $condition_suppression);
+
+            echo '
+            <div class="table-responsive small-table">
+                <table class="data-table  text-center table table-striped table-hover table-bordered">
+                    <thead class="'.$classe_enTete.'">'.$headerHTML.'</thead>
+                    <tbody>'.$htmlBody.'</tbody>
+                </table>
+            </div>';
+        }
+
+
+        /*
+
+        Cette fonction permet d'afficher un tableau,
+
+        @param $data : Un tableau des objets à afficher dans le tableau
+        @param $keys : Les clés des éléments qui seront afficher dans le tableau
+        @param link_first_part: Le début du lien qui sera associé au clique sur la ligne du tableau
+        @param link_key : La clé utlisée pour indiquée quelle partie du tableau 'Data' est utilisé dans le lien
+        @param header : La liste des noms de colonnes
+        @param header_class : La classe qui sera appliqué à l'entête
+
+        */
+
+
+        public function afficherTableau($data, $keys, $link_first_part = '', $link_key = null, $header = null, $header_class = 'thead-dark')
+        {
+            if ($header == null) {
+                $header = $keys;
+            }
+
+            $headerHTML = "<tr>";
+            
+            foreach ($header as $headerData) {
+                $headerHTML .= "<th scope='col'>${headerData}</th>";
+            }
+
+            $headerHTML .= '</tr>';
+
+
+            $htmlBody = "";
+
+
+            foreach ($data as $row) {
+                if ($link_key != null) {
+                    $htmlBody .= "<tr onclick=\"document.location = '${link_first_part}${row[$link_key]}'\">";
+                } else {
+                    $htmlBody .= "<tr>";
+                }
+                
+                foreach ($keys as $key) {
+                    $htmlBody .= "<td>${row[$key]}</td>";
+                }
+
+                $htmlBody .= "</tr>";
+            }
+
+            echo '
+            <div class="table-responsive small-table">
+                <table class="data-table  text-center table table-striped table-hover table-bordered">
+                    <thead class="'.$header_class.'">'.$headerHTML.'</thead>
+                    <tbody>'.$htmlBody.'</tbody>
+                </table>
+            </div>';
         }
     }

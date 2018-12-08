@@ -13,7 +13,7 @@
             $modele = new ModeleGroupe($id_groupe, $debut);
 
             switch ($action) {
-                case 'utilisateur':
+                case 'utilisateurs':
                     $modele->getUtilisateurs();
                 break;
 

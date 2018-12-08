@@ -55,4 +55,18 @@
 
             $groupe->retirerSousGroupe($sous_groupe);
         }
+
+        public function ajouterSousGroupe($sous_groupe, $id_groupe)
+        {
+            $groupe = new Groupe($id_groupe);
+
+            $groupe->ajouterSousGroupe($sous_groupe);
+        }
+
+        public function ajouterUtilisateur($pseudo_utilisateur, $id_groupe)
+        {
+            $groupe = new Groupe($id_groupe);
+
+            $groupe->ajouterUtilisateur($pseudo_utilisateur);
+        }
     }

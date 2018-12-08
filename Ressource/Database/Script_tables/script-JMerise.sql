@@ -319,7 +319,7 @@ CREATE TABLE membres_de_groupe(
 CREATE TABLE sous_groupe(
         id_groupe_parent   Int NOT NULL ,
         id_groupe_enfant Int NOT NULL ,
-        PRIMARY KEY (id_groupe ,id_groupe_1 )
+        PRIMARY KEY (id_groupe_parent ,id_groupe_enfant )
 )ENGINE=InnoDB;
 
 

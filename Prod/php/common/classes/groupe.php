@@ -32,7 +32,7 @@
         private static $groupDetailsQuery  = "select * from groupe where id_groupe = :id_groupe";
 
 
-        private static $addUserQuery       = "insert into membres_de_groupe values(:id_groupe, :id_utilisateur)";
+        private static $addUserQuery       = "insert into membres_de_groupe select :id_groupe, id_utilisateur from utilisateur where pseudo_utilisateur  = :pseudo_utilisateur limit 1";
         private static $addGroupQuery      = "insert into sous_groupe values(:groupe_parent, :groupe_enfant)";
         private static $insertGroupQuery    = "insert into groupe values (default, :nom_groupe, :nom_droits)";
 
@@ -104,12 +104,12 @@
             return $this->details_groupe;
         }
 
-        public function ajouterUtilisateur($id_utilisateur)
+        public function ajouterUtilisateur($pseudo_utilisateur)
         {
             $stmt = self::$db->prepare(self::$addUserQuery);
             
             $stmt->bindValue(':id_groupe', $this->id_groupe);
-            $stmt->bindValue(':id_utilisateur', $id_utilisateur);
+            $stmt->bindValue(':pseudo_utilisateur', $pseudo_utilisateur);
 
             try {
                 $stmt->execute();

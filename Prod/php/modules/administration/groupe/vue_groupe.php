@@ -13,7 +13,7 @@
             require_once __DIR__ . "/html/liste_groupes_1.html";
             
             foreach ($liste_groupe as $groupe) {
-                echo "<tr>";
+                echo "<tr onclick=\"document.location = 'index.php?module=administration&action=afficher_modification&type=groupe&id=${groupe['id_groupe']}'\">";
                 echo "<td>${groupe['id_groupe']}</td>";
                 echo "<td>${groupe['nom_groupe']}</td>";
                 echo "<td>${groupe['nom_droits']}</td>";
@@ -84,7 +84,7 @@
             Groupe '.$groupe['nom_groupe'].'
         </h2>
         
-        <fieldset>
+        <fieldset >
             <legend align="center" class="col-auto px-0">Utilisateurs</legend>
             <div class="table-responsive px-3">
                 <table id="data-table" class="small-table text-center table table-striped table-hover table-bordered">
@@ -99,26 +99,25 @@
                         '.$tab_utilisateurs.'
                     </tbody>
                 </table>
-        
-                <form class="form-inline">
+                <form class="form-inline" method="post" action="index.php?module=administration&type=groupe&action=ajouter_utilisateur&id_groupe='.$groupe['id_groupe'].'">
                     <div class="container-fluid row justify-content-around">
                         <div class="container col-md-9 row justify-content-around">
                             <label class="col-md-4 pb-2">Pseudo</label>
-                            <input type="text" class="form-control col-md-6" />
+                            <input type="text" id="pseudo_utilisateur" list="pseudos_utilisateurs" name="pseudo_utilisateur" class="form-control col-md-6" />
                         </div>
                         <button type="submit" class="btn btn-success mb-2">Ajouter</button>
                     </div>
+                    <datalist id="pseudos_utilisateurs"></datalist>
                 </form>
         
             </div>
         </fieldset>
         
         
-        
         <fieldset class="mt-4">
             <legend align="center" class="col-auto px-0">Sous groupes</legend>
             <div class="table-responsive px-3">
-                <table class="small-table  text-center table table-striped table-hover table-bordered">
+                <table  class="data-table small-table  text-center table table-striped table-hover table-bordered">
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">Sous_groupe</th>
@@ -131,14 +130,16 @@
                     </tbody>
                 </table>
         
-                <form class="form-inline">
+                <form class="form-inline mb-4" method="post" action="index.php?module=administration&type=groupe&action=ajouter_sous_groupe&id_groupe='.$groupe['id_groupe'].'">
                     <div class="container-fluid row justify-content-around">
                         <div class="container col-md-9 row justify-content-around">
-                            <label class="col-md-4 pb-2">Sous groupe</label>
-                            <input type="text" class="form-control col-md-6" />
+                            <label class="col-md-4 pb-2">id groupe</label>
+                            <input type="text" class="form-control col-md-6" list="groupes_fils" id="groupe_fils"  name="groupe_fils"/>
                         </div>
                         <button type="submit" class="btn btn-success mb-2">Ajouter</button>
                     </div>
+                    <datalist id="groupes_fils">
+                    </datalist>
                 </form>
         
             </div>
