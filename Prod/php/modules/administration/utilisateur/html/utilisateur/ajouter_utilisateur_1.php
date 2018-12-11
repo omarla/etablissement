@@ -5,7 +5,11 @@
   Ajouter un utilisateur
 </h2>
 
-<form class="pb-2" method="post" action="index.php?module=administration&type=utilisateur&action=inscription_utilisateur">
+<form
+  class="pb-2"
+  method="post"
+  action="index.php?module=administration&type=utilisateur&action=inscription_utilisateur"
+>
   <div class="form-row">
     <div class="form-group col-md-4">
       <label for="nom">Nom</label>
@@ -82,7 +86,7 @@
         class="form-control"
         id="addresse"
         name="addresse"
-        placeholder="120 Rue de la nouvelle France"
+        placeholder="Votre adresse"
         required
       />
     </div>
@@ -91,13 +95,18 @@
   <div class="form-row">
     <div class="form-group col-md-4">
       <label for="ville">Ville</label>
-      <input type="text" list="villes" class="form-control" id="ville" />
+      <input
+        type="text"
+        placeholder="Votre ville"
+        class="form-control"
+        id="ville"
+      />
     </div>
     <div class="form-group col-md-4">
       <label for="code_postal">Code postal</label>
       <input
+        placeholder="Code postal"
         type="text"
-        list="codes_postal"
         class="form-control"
         id="code_postal"
         name="code_postal"
@@ -105,13 +114,20 @@
       />
     </div>
     <div class="form-group col-md-4">
-      <label for="pays_naissance" >Pays naissance</label>
-      <input id="pays_naissance" list="pays" type="text" name="pays_naissance" class="form-control" required>
+      <label for="pays_naissance">Pays naissance</label>
+      <input
+        id="pays_naissance"
+        list="pays"
+        placeholder="Pays de naissance"
+        type="text"
+        name="pays_naissance"
+        class="form-control"
+        required
+      />
     </div>
   </div>
 
   <div class="form-row">
-
     <div class="form-group col-md-6">
       <label for="tel">Numéro de telephone</label>
       <input
@@ -125,5 +141,4 @@
       />
     </div>
 
-    <div class="form-group col-md-6">
-      <label for="droits">Droits</label>
+    <div class="form-group col-md-6"><label for="droits">Droits</label>

@@ -1,8 +1,9 @@
 <?php
     session_start();
-    if (isset($_SESSION['historique'])) {
+
+    if (isset($_SESSION['historique']) && $_SERVER['REQUEST_METHOD'] === 'GET') {
         array_unshift($_SESSION['historique'], "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]");
-    } else {
+    } else if($_SERVER['REQUEST_METHOD'] === 'GET'){
         $_SESSION['historique'] = array(
             "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]"
         );
@@ -12,6 +13,7 @@
     require_once "php/common/Constants.php";
     require_once "php/common/Fonctions.php";
     require_once "php/common/classes/user/utilisateur.php";
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -20,11 +22,11 @@
 	<title>Etablissement</title>
 	<meta charset="utf-8">
 
-	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-	<link href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" rel="stylesheet" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
-	<link href="https://fonts.googleapis.com/css?family=Satisfy" rel="stylesheet" type="text/css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" rel="stylesheet" type="text/css">
-    <link href="http://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
+    <link href="css/Common/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="./frameworks/font-awesome/css/all.css" rel="stylesheet" type="text/css">
+    <link href="css/Common/toastr.css" rel="stylesheet" type="text/css">
+    <link href="./frameworks/DataTables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css">
+    <link href="css/Common/jquery.flexdatalist.min.css" rel="stylesheet" type="text/css">
 
     <link href="css/main.css" rel="stylesheet"  type="text/css">
 	<link href="css/page-externe.css" rel="stylesheet" type="text/css"> 
@@ -36,7 +38,9 @@
 </head>
 <body>
 
-	<?php
+    <?php
+        ob_start();
+
         $module = isset($_GET['module']) ? htmlspecialchars($_GET['module']) : '';
 
         if ($module === "error") {
@@ -73,16 +77,22 @@
         } else {
             //header('Location: Accueil.php');
         }
+
+        echo ob_get_clean();
         
     ?>
 
-	<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    <script src="http://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+	<script src="scripts/Common/jquery-3.3.1.min.js" ></script>
+	<script src="scripts/Common/popper.min.js" ></script>
+	<script src="scripts/Common/bootstrap.min.js" ></script>
+    <script src="scripts/Common/toastr.js"></script>
+    <script src="./frameworks/DataTables/datatables.min.js"></script>
+    <script src="./frameworks/DataTables/DataTables-1.10.18/js/dataTables.bootstrap4.min.js"></script>
+
+    <script src="scripts/Common/jquery.flexdatalist.js"></script>
+
     <script src="scripts/init.js"></script>    
-    <script src="scripts/utilisateurs.js"></script>
+    <script src="scripts/autocomplete.js"></script>
     <script src="scripts/groupe.js"></script>
 
 </body>

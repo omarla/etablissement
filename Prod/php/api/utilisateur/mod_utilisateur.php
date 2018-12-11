@@ -6,14 +6,13 @@
     {
         public function __construct()
         {
-            $debut = isset($_GET['start']) ? strtolower($_GET['start']) : Response::send_error(HTTP_BAD_REQUEST, 'Paramètre start est absent');
             $action = isset($_GET['action']) ? strtolower($_GET['action']) : Response::send_error(HTTP_BAD_REQUEST, 'Paramètre action est absent');
             
-            $modele = new ModeleUtilisateur($debut);
+            $modele = new ModeleUtilisateur();
 
             switch ($action) {
-                case 'pseudo':
-                    $modele->getPseudo();
+                case 'pseudo_personnel':
+                    $modele->getPseudoPersonnels();
                 break;
 
                 case 'ville':
@@ -22,10 +21,6 @@
 
                 case 'pays':
                     $modele->getPays();
-                break;
-
-                case 'code_postal':
-                    $modele->getCodePostal();
                 break;
 
 

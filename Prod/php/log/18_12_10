@@ -1,0 +1,101 @@
+
+
+Date      :   10122018 6:55:18Titre     :   Message   :   Array
+
+
+
+*************************************************Date      :   10122018 6:55:31Titre     :   Message   :   Array*************************************************
+
+
+
+*************************************************Date      :   10122018 6:55:43Titre     :   ErreurMessage   :   Array*************************************************
+
+
+
+*************************************************Date      :   10122018 6:55:59Titre     :   ErreurMessage   :   *************************************************
+
+
+
+*************************************************Date      :   10122018 6:57:49Titre     :   ErreurMessage   :   Non-static method Database::initConnexion() should not be called staticallyFile      :   Line      :   62*************************************************
+
+
+
+*************************************************Date      :   10122018 6:58:18Titre     :   ErreurMessage   :   Non-static method Database::initConnexion() should not be called staticallyFile      :   /home/24IUT/Desktop/Projet_Web/etablissement/Prod/index.phpLine      :   62*************************************************
+
+
+
+*************************************************
+Date      :   10122018 6:59:23
+Titre     :   Erreur
+Message   :   Non-static method Database::initConnexion() should not be called statically
+File      :   /home/24IUT/Desktop/Projet_Web/etablissement/Prod/index.php
+Line      :   62
+*************************************************
+
+
+
+
+*************************************************
+Date      :   10122018 7:00:28
+Titre     :   Erreur
+Message   :   
+File      :   
+Line      :   
+*************************************************
+
+
+
+
+*************************************************
+Date      :   10122018 7:00:47
+Titre     :   Erreur
+Message   :   
+File      :   
+Line      :   
+*************************************************
+
+
+
+
+*************************************************
+Date      :   10122018 7:05:10
+Titre     :   Erreur
+Message   :   
+File      :   
+Line      :   
+*************************************************
+
+
+
+
+*************************************************
+Date      :   10122018 7:05:42
+Titre     :   Erreur
+Message   :   set_exception_handler() expects the argument (ExcetpionHandler) to be a valid callback
+File      :   /home/24IUT/Desktop/Projet_Web/etablissement/Prod/php/common/Fonctions.php
+Line      :   84
+*************************************************
+
+
+
+
+*************************************************
+Date      :   10122018 7:06:06
+Titre     :   Erreur
+Message   :   
+File      :   
+Line      :   
+*************************************************
+
+
+
+
+*************************************************
+Date      :   10122018 7:06:21
+Titre     :   Erreur
+Message   :   
+File      :   
+Line      :   
+*************************************************
+
+

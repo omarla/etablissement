@@ -1,18 +1,18 @@
 <?php
-  require_once "php/verify.php";
-  require_once "php/common/Database.php";
+  require_once __DIR__ . "/../../verify.php";
+  require_once __DIR__ . "/classe_generique.php";
   
-  class Semestre extends Database
+  class Semestre extends ClasseGenerique
   {
       private static $semestreQuery         = "select * from semestre where ref_semestre = :ref";
 
 
-      private static $semestreYearsQuery    = "select ref_semestre, 
-                                                avg(moyenne),
+      private static $semestreYearsQuery    = "select annee, 
+                                                avg(moyenne) as moyenne,
                                                 sum(case when est_valide = 1 then 1 else 0 end) as nombre_reussite,
-                                                sum(case when est_valide = 0 then 1 else 0 end) as nombre_echoue,
-                                                sum(case when est_valide = 1 then 1 else 0 end) / count(ref_semestre) as taux_reussite,
-                                                sum(case when est_valide = 0 then 1 else 0 end) / count(ref_semestre) as taux_echoue
+                                                sum(case when est_valide = 0 then 1 else 0 end) as nombre_echecs,
+                                                round(sum(case when est_valide = 1 then 1 else 0 end) / count(ref_semestre), 2) as taux_reussite,
+                                                round(sum(case when est_valide = 0 then 1 else 0 end) / count(ref_semestre), 2) as taux_echecs
                                                 from etudie_en 
                                                 where ref_semestre = :ref
                                                 group by ref_semestre, annee
@@ -32,10 +32,17 @@
                                                 group by ref_semestre
                                                 ";
 
-      private static $insertSemestreQuery = "insert into semestre values(:ref, :nom, :pts_ets)";
+      private static $insertSemestreQuery   = "insert into semestre values(:ref, :nom, :pts_ets)";
 
 
-      private static $deleteSemestreQuery = "delete from semestre where ref_semestre = :ref";
+      private static $updateSemestreQuery   = "update semestre set nom_semestre = :nom, points_ets_semestre = :pts_ets where ref_semestre = :ref";
+
+
+      private static $deleteStudentQuery    = "delete from etudie_en where ref_semestre = :ref and num_etudiant = :num_etudiant and annee = :annee_courante";
+
+      private static $deleteSemestreQuery   = "delete from semestre where ref_semestre = :ref";
+
+
 
 
       private $ref_semestre;
@@ -45,6 +52,7 @@
     
       public function __construct($ref_semestre)
       {
+          parent::__construct(self::$semestreQuery,array(":ref"=>$ref_semestre));
           $this->ref_semestre = $ref_semestre;
       }
 
@@ -95,12 +103,35 @@
       }
 
 
+      public function modifierSemestre($nom, $pts_ets)
+      {
+          $stmt = self::$db->prepare(self::$updateSemestreQuery);
+
+          $stmt->bindValue(":ref", $this->ref_semestre);
+          $stmt->bindValue(":nom", $nom);
+          $stmt->bindValue(":pts_ets", $pts_ets);
+      
+          $stmt->execute();
+      }
+
+      public function retirerEtudiant($num_etudiant)
+      {
+          $stmt = self::$db->prepare(self::$deleteStudentQuery);
+
+          $stmt->bindValue(":ref", $this->ref_semestre);
+          $stmt->bindValue(":num_etudiant", $num_etudiant);
+          $stmt->bindValue(":annee_courante", self::getDBYear());
+          
+          $stmt->execute();
+      }
+
+
 
       public function supprimerSemestre()
       {
           $stmt = self::$db->prepare(self::$deleteSemestreQuery);
           
-          $stmt->bindValue(':ref', $this->ref);
+          $stmt->bindValue(':ref', $this->ref_semestre);
           
           $stmt->execute();
       }

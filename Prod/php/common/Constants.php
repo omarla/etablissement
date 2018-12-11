@@ -23,6 +23,12 @@
 
     define("INVALID_ACTION_ERROR_MESSAGE", "Cette action est invalide pour ce module");
 
+    define("INVALID_TYPE_ERROR_MESSAGE", "Le type fourni dans la requête est inconnu");
+
+    define("NOT_ENOUGH_PARAM_TITLE", "Paramètre insuffisants");
+
+    define("NOT_ENOUGH_PARAM_MESSAGE", "Vous devez fournir la totalité des paramètres requis");
+
     define("DATABASE_ERROR_MESSAGE", "La base de données est en maintenance, Merci de réessayer plus tard");
 
     define("DATABASE_ERROR_TITLE", "Erreur BD");

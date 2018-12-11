@@ -1,9 +1,10 @@
 <?php
-    require_once "php/verify.php";
+    require_once __DIR__ . "./../../../verify.php";
+    require_once __DIR__ . "./../../../common/cont_generique.php";
     require_once __DIR__ . "/vue_utilisateur.php";
     require_once __DIR__ . "/modele_utilisateur.php";
 
-    class ContUtilisateur
+    class ContUtilisateur extends ContGenerique
     {
         private $vue;
         private $modele;
@@ -38,21 +39,30 @@
             $keyList = array('email','nom', 'prenom', 'tel', 'addresse', 'est_homme', 'date_naissance', 'mot_de_passe','droits',  'pays_naissance', 'code_postal');
             
             if (checkArrayForKeys($keyList, $_POST)) {
-                $data = $_POST;
-            
+                $data = array_map(function($el){return htmlspecialchars($el);},$_POST);
                 $this->modele->insertUser($data);
             } else {
-                header('Location: index.php?module=error&title=Paramètres insufisants&message=Le nombre passé de paramètre est beaucoup insuffisant');
+                $this->afficherErreur(NOT_ENOUGH_PARAM_TITLE, $message_erreur);
             }
+
+            header('Location: index.php?module=administration&type=utilisateur&action=liste_utilisateurs');
+
         }
 
         public function afficherModifierUtilisateur()
         {
-            $required_key = array('email','nom', 'prenom', 'tel', 'addresse', 'est_homme', 'date_naissance','droits', 'filliere_bac', 'pays_naissance', 'code_postal');
+            $message_erreur = null;
+            $titre_erreur = null;
 
-            $id_utilisateur = isset($_GET['id']) ? $_GET['id'] : header('Location: index.php?module=error&title=Paramètres insufisants&message=Le nombre passé de paramètre est beaucoup insuffisant');
+            if(isset($_GET['id'])){
+                $id_utilisateur = htmlspecialchars($_GET['id']);
+            }else{
+                $message_erreur = "Vous devez fournir l'identifiant de l'utilisateur";
+                $this->afficherErreur(NOT_ENOUGH_PARAM_TITLE, $message_erreur);
+            }
             
             $liste_droits = $this->modele->getListeDroits();
+            
             $utilisateur = $this->modele->getUtilisateur($id_utilisateur);
 
             $this->vue->afficherUtilisateur($utilisateur, $liste_droits);
@@ -63,18 +73,24 @@
             $required_key = array('email','nom', 'prenom', 'tel', 'addresse', 'est_homme', 'date_naissance','droits', 'pays_naissance', 'code_postal');
 
             if (checkArrayForKeys($required_key, $_POST) && isset($_GET['id'])) {
-                $id = $_GET['id'];
+                $id = htmlspecialchars($_GET['id']);
+                $data = array_map(function($el){
+                    return htmlspecialchars($el);
+                }, $_POST);
 
                 if (isset($_POST['modifier'])) {
-                    $this->modele->modifierUtilisateur($_POST, $id);
+                    $this->modele->modifierUtilisateur($data, $id);
+                    header('Location: index.php?module=administration&type=utilisateur&action=modification&id='. $_GET['id']);
                 } elseif (isset($_POST['supprimer'])) {
                     $this->modele->supprimerUtilisateur($id);
+                    header('Location: index.php?module=administration&type=utilisateur&action=liste_utilisateurs');
                 } else {
-                    //header('Location: index.php?module=error&title=Paramètres insufisants&message=Le nombre passé de paramètre est beaucoup insuffisant');
+                    $this->afficherErreur('Action invalide', "Vous n'avez fournis aucune action");
                 }
             } else {
-                // header('Location: index.php?module=error&title=Paramètres insufisants&message=Le nombre passé de paramètre est beaucoup insuffisant');
+                $this->afficherErreur(NOT_ENOUGH_PARAM_TITLE, NOT_ENOUGH_PARAM_MESSAGE);
             }
+
         }
 
 
@@ -91,16 +107,18 @@
 
         public function ajouterPersonnel()
         {
-            $pseudo = isset($_POST['pseudo']) ? $_POST['pseudo'] : die("Pseudo incorrecte");
+            $pseudo = isset($_POST['pseudo']) ? htmlspecialchars($_POST['pseudo']) : $this->afficherErreur(NOT_ENOUGH_PARAM_TITLE, NOT_ENOUGH_PARAM_MESSAGE);
             $estEnseignant = isset($_POST['estEnseignant']) && $_POST['estEnseignant'] === 'on' ? true : false;
 
             $this->modele->ajouterPersonnel($pseudo, $estEnseignant);
+
+            header('Location: index.php?module=administration&type=personnel&action=liste_personnels');
         }
 
 
         public function afficherModifierPersonnel()
         {
-            $id = isset($_GET['id']) ? $_GET['id'] : die('Id incorrecte');
+            $id = isset($_GET['id']) ? htmlspecialchars($_GET['id']) : $this->afficherErreur(NOT_ENOUGH_PARAM_TITLE, "L'identifiant du personnel n'est pas fourni");
 
             $personnel = $this->modele->getPersonnel($id);
 
@@ -109,14 +127,18 @@
 
         public function modifierPersonnel()
         {
-            $id_personnel = isset($_GET['id']) ? $_GET['id'] : die('');
-            $est_enseignant = isset($_POST['estEnseignant']) ? $_POST['estEnseignant'] === 'on' : false;
-            $heures_travail = isset($_POST['heures_travail']) ? $_POST['heures_travail'] : die('');
+            $id_personnel = isset($_GET['id']) ? htmlspecialchars($_GET['id']) : $this->afficherErreur(NOT_ENOUGH_PARAM_TITLE, "L'identifiant du personnel n'est pas fourni");
+            $est_enseignant = isset($_POST['estEnseignant']) ? htmlspecialchars($_POST['estEnseignant']) === 'on' : false;
+            $heures_travail = isset($_POST['heures_travail']) ? htmlspecialchars($_POST['heures_travail']) : $this->afficherErreur(NOT_ENOUGH_PARAM_TITLE, "Le nombre d'heures travaillés sont obligatoires");
 
             if (isset($_POST['modification'])) {
                 $this->modele->modifierPersonnel($id_personnel, $est_enseignant, $heures_travail);
+                header('Location: index.php?module=administration&type=personnel&action=afficher_modification_personnel&id='.$id_personnel);
             } elseif (isset($_POST['suppression'])) {
                 $this->modele->supprimerPersonnel($id_personnel);
+                header('Location: index.php?module=administration&type=personnel&action=liste_personnels');
+            }else{
+                $this->afficherErreur('Action invalide', "Veuillez choisir entre la modification ou la suppression du personnel");
             }
         }
     }

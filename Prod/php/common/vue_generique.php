@@ -53,10 +53,14 @@
                 $html .= "<tr>";
                 
                 foreach ($cles as $cle) {
-                    $html .= "<td>${ligne[$cle]}</td>";
+                    if ($ligne[$cle] != null) {
+                        $html .= "<td>${ligne[$cle]}</td>";
+                    } else {
+                        $html .= "<td>-</td>";
+                    }
                 }
 
-                if ($condition_suppression || $condition_suppression($ligne)) {
+                if (!$condition_suppression || $condition_suppression($ligne)) {
                     $html .= "<td><a href='${debut_lien_suppression}${ligne[$cle_suppression]}'>
                                 <button class='btn btn-sm btn-outline-danger px-2 py-0'>Supprimer</button>
                             </a></td>";
@@ -73,7 +77,7 @@
         }
 
 
-        public function afficherTableauSuppression($tableau, $cles, $cle_suppression, $debut_lien_suppression, $enTete = null, $condition_suppression = null, $classe_enTete = 'thead-dark', $message_introuvable = "Aucun élément n'a été trouvé")
+        public function afficherTableauSuppression($tableau, $cles, $cle_suppression, $debut_lien_suppression, $enTete = null, $condition_suppression = null, $classe_enTete = 'thead-dark')
         {
             if ($enTete == null) {
                 $enTete = $cles;
@@ -89,7 +93,7 @@
             $headerHTML .= '</tr>';
 
 
-            $htmlBody = $this->transformerEnTableauSuppression($tableau, $cles, $cle_suppression, $debut_lien_suppression, $message_introuvable, $condition_suppression);
+            $htmlBody = $this->transformerEnTableauSuppression($tableau, $cles, $cle_suppression, $debut_lien_suppression, $condition_suppression);
 
             echo '
             <div class="table-responsive small-table">
@@ -141,7 +145,11 @@
                 }
                 
                 foreach ($keys as $key) {
-                    $htmlBody .= "<td>${row[$key]}</td>";
+                    if ($row[$key] != null) {
+                        $htmlBody .= "<td>${row[$key]}</td>";
+                    } else {
+                        $htmlBody .= "<td>-</td>";
+                    }
                 }
 
                 $htmlBody .= "</tr>";

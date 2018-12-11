@@ -1,6 +1,6 @@
 <?php
-    require_once "php/verify.php";
-    require_once "php/common/Database.php";
+    require_once __DIR__ . "./../../../verify.php";
+    require_once __DIR__ . "/../../Database.php";
     
     class Enseignant extends Database
     {
@@ -15,11 +15,7 @@
             
             $stmt->bindValue(1, $id_personnel);
 
-            try {
-                $stmt->execute();
-            } catch (PDOException $e) {
-                echo $e->getMessage();
-            }
+            $stmt->execute();
         }
 
 
@@ -29,11 +25,6 @@
                     
             $stmt->bindValue(':id_personnel', $id_personnel);
 
-            try {
-                $stmt->execute();
-            } catch (PDOException $e) {
-                echo $e->getMessage();
-                exit(0);
-            }
+            $stmt->execute();
         }
     }

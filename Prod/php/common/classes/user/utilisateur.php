@@ -1,18 +1,16 @@
 <?php
-    require_once "php/verify.php";
-    require_once "php/common/Database.php";
+    require_once __DIR__ . "/../../../verify.php";
+    require_once __DIR__ . "/../classe_generique.php";
     
-    class Utilisateur extends Database
+    class Utilisateur extends ClasseGenerique
     {
         private static $userListQuery           = 'select * from utilisateur';
         
-        private static $userIdQuery             = 'select * from utilisateur 
+        private static $userQuery               = 'select * from utilisateur 
                                                     left join ville on (utilisateur.code_postal_ville = ville.code_postal_ville)
-                                                    left join pays on (utilisateur.code_pays = pays.code_pays) where id_utilisateur = ?;';
+                                                    left join pays on (utilisateur.code_pays = pays.code_pays) where id_utilisateur = :id_utilisateur';
 
-        private static $userPseudoQuery         = 'select * from utilisateur 
-                                                    left join ville on (utilisateur.code_postal_ville = ville.code_postal_ville)
-                                                    left join pays on (utilisateur.code_pays = pays.code_pays) where pseudo_utilisateur = ?;';
+        private static $pseudoToIdQuery         = 'select id_utilisateur from utilisateur where pseudo_utilisateur = :pseudo';
     
     
         private static $insertUserQuery         = 'insert into utilisateur values(
@@ -34,6 +32,84 @@
     
         private static $deleteUserQuery       = "delete from utilisateur where id_utilisateur = :id_utilisateur";
     
+        private $id_utilisateur;
+        private $informations_utilisateur;
+
+
+        public function __construct($id_utilisateur = "", $pseudo_utilisateur = ""){
+
+            $requete = "select * from utilisateur where id_utilisateur = ?";
+
+            if(!is_numeric($id_utilisateur)){
+                $id_utilisateur = self::pseudoEnIdUtilisateur($pseudo_utilisateur);
+            }
+
+            parent::__construct($requete, array($id_utilisateur));
+        
+            $this->id_utilisateur = $id_utilisateur;
+        }   
+
+        public function informations_utilisateur(){
+            if(!$this->informations_utilisateur){
+                $stmt = self::$db->prepare(self::$userQuery);
+            
+                $stmt->bindValue('id_utilisateur',$this->id_utilisateur);
+                
+                $stmt->execute();
+                
+                $this->informations_utilisateur = $stmt->fetch(PDO::FETCH_ASSOC);
+            }
+            
+            return $this->informations_utilisateur;
+        }
+
+        public function getIdUtilisateur(){
+            return $this->id_utilisateur;
+        }
+
+        public function modifierUtilisateur($data)
+        {
+            $keyList = array('email','nom', 'prenom', 'tel', 'addresse', 'est_homme', 'date_naissance', 'droits', 'pays_naissance', 'code_postal');
+            
+            $user = associativeToNumArray($keyList, $data);
+
+            //On complète les paramètres avec l'identifiant de l'utilisateur
+            array_push($user, $this->id_utilisateur);
+
+            $stmt = self::$db->prepare(self::$modifyUserQuery);
+            
+            $stmt->execute($user);
+        }
+
+
+
+        public function modifierMDPUtilisateur($mdp)
+        {
+            $stmt = self::$db->prepare(self::$modifyUserPasswordQuery);
+
+            $stmt->execute(array(crypt($mdp, SALT_KEY), $this->id_utilisateur));
+        }
+
+
+
+
+        public function supprimerUtilisateur()
+        {
+            $stmt = self::$db->prepare(self::$deleteUserQuery);
+            $stmt->bindValue(':id_utilisateur', $this->id_utilisateur);
+            $stmt->execute();
+        }
+
+
+
+
+
+
+
+
+
+
+
         //Renvoie la liste des utilisateurs
         public static function getListeUtilisateurs()
         {
@@ -41,56 +117,38 @@
             
             $liste_utilisateurs = array();
 
-            try {
-                $stmt->execute();
-                
-                foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $utilisateur) {
-                    array_push($liste_utilisateurs, array(
-                        "id"=>$utilisateur['id_utilisateur'],
-                        "nom"=>$utilisateur['nom_utilisateur'],
-                        "prenom"=>$utilisateur['prenom_utilisateur'],
-                        "tel"=>$utilisateur['tel_utilisateur'],
-                        "mail"=>$utilisateur['mail_utilisateur'],
-                        "date_naissance"=>$utilisateur['date_naissance_utilisateur']
-                    ));
-                }
-            } catch (PDOException $e) {
-                header('Location: index.php?module=error&title=Erreur recher&message=Impossible de trouver la liste des utilisateurs');
+            $stmt->execute();
+            
+            foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $utilisateur) {
+                array_push($liste_utilisateurs, array(
+                    "id"=>$utilisateur['id_utilisateur'],
+                    "nom"=>$utilisateur['nom_utilisateur'],
+                    "prenom"=>$utilisateur['prenom_utilisateur'],
+                    "tel"=>$utilisateur['tel_utilisateur'],
+                    "mail"=>$utilisateur['mail_utilisateur'],
+                    "date_naissance"=>$utilisateur['date_naissance_utilisateur']
+                ));
             }
 
             return $liste_utilisateurs;
         }
 
-        //Renvoie l'utilisateur correspondant à l'identifiant envoyé $id
-        public static function getUtilisateurParId($id_utilisateur)
-        {
-            $stmt = self::$db->prepare(self::$userIdQuery);
-
-            $stmt->bindValue(1, $id_utilisateur);
-
-            try {
-                $stmt->execute();
-                
-                return $stmt->fetch(PDO::FETCH_ASSOC);
-            } catch (PDOException $e) {
-                header('Location: index.php?module=error&title=Erreur modification&message=Impossible d\'accéder aux détails de cet utilisateur. Veuillez réessayer plus tard');
-            }
-        }
 
         //Renvoie l'utilisateur correspondant au pseudo envoyé $pseudo
-        public static function getUtilisateurParPseudo($pseudo)
+        private static function pseudoEnIdUtilisateur($pseudo)
         {
-            $stmt = self::$db->prepare(self::$userPseudoQuery);
+            $stmt = self::$db->prepare(self::$pseudoToIdQuery);
 
-            $stmt->bindValue(1, $pseudo);
+            $stmt->bindValue(":pseudo", $pseudo);
 
-            try {
-                $stmt->execute();
-                
-                return $stmt->fetch(PDO::FETCH_ASSOC);
-            } catch (PDOException $e) {
-                header('Location: index.php?module=error&title=Erreur modification&message=Impossible d\'accéder aux détails de cet utilisateur. Veuillez réessayer plus tard');
-            }
+            $stmt->execute();
+            
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if($result != null)
+                return $result['id_utilisateur'];
+            else
+                return null;
         }
         
 
@@ -108,56 +166,13 @@
             
             $stmt = self::$db->prepare(self::$insertUserQuery);
             
-            try {
-                $stmt->execute($utilisateur);
-            } catch (PDOException $e) {
-                //header('Location: index.php?module=error&title=Erreur inscription&message=Une erreur est survenue lors de l\'inscription d\'un utilisateur');
-            }
+            $stmt->execute($utilisateur);
         }
 
 
-        public static function modifierUtilisateur($data, $id)
-        {
-            $keyList = array('email','nom', 'prenom', 'tel', 'addresse', 'est_homme', 'date_naissance', 'droits', 'pays_naissance', 'code_postal');
-            
-            $user = associativeToNumArray($keyList, $data);
-
-            //On complète les paramètres avec l'identifiant de l'utilisateur
-            array_push($user, $id);
-
-            $stmt = self::$db->prepare(self::$modifyUserQuery);
-            
-            try {
-                $stmt->execute($user);
-            } catch (PDOException $e) {
-                header('Location: index.php?module=error&title=Erreur Modification&message=Une erreur est survenue lors de l\'inscription d\'un utilisateur');
-            }
-        }
 
 
-        public static function modifierMDPUtilisateur($id, $mdp)
-        {
-            $stmt = self::$db->prepare(self::$modifyUserPasswordQuery);
 
-            try {
-                $stmt->execute(array(crypt($mdp, SALT_KEY), $id));
-            } catch (PDOException $e) {
-                echo $e->getMessage();
-            }
-        }
-
-
-        public static function supprimerUtilisateur($id)
-        {
-            $stmt = self::$db->prepare(self::$deleteUserQuery);
-            $stmt->bindValue(':id_utilisateur', $id);
-
-            try {
-                $stmt->execute();
-            } catch (PDOException $e) {
-                header('Location: index.php?module=error&title=Erreur suppression&message=Peut être que cet utilisateur n\'existe pas ');
-            }
-        }
 
 
 

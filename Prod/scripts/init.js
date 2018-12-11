@@ -40,3 +40,11 @@ function setDataListItems(datalist, data, valueName, htmlTextName) {
         i++;
     }
 }
+
+var initVars = {
+    url: {
+        module: (new URL(window.location.href)).searchParams.get('module'),
+        type: (new URL(window.location.href).searchParams.get('type')) || '',
+        action: (new URL(window.location.href).searchParams.get('action'))
+    }
+};

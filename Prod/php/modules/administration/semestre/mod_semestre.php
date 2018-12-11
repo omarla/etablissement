@@ -18,9 +18,26 @@
                     $cont->ajouter_semestre();
                 break;
 
-                case 'modifier_semestre':
+                case 'afficher_semestre':
                     $cont->afficher_semestre();
                 break;
+
+                case 'modifier_semestre':
+                    $cont->modifier_semestre();
+                break;
+
+                case 'retirer_etudiant':
+                    $cont->retirer_etudiant();
+                break;
+
+                case 'supprimer_semestre':
+                    $cont->supprimer_semestre();
+                break;
+
+                default:
+                    header('Location: index.php?module=administration&type=semestre&action=liste_semestre');
+                break;
+
             }
         }
     }

@@ -538,4 +538,5 @@ ALTER TABLE notes_controle ADD CONSTRAINT FK_notes_controle_id_controle FOREIGN 
 ALTER TABLE destinataire_mail ADD CONSTRAINT FK_destinataire_mail_id_utilisateur FOREIGN KEY (id_utilisateur) REFERENCES utilisateur(id_utilisateur);
 ALTER TABLE destinataire_mail ADD CONSTRAINT FK_destinataire_mail_id_mail FOREIGN KEY (id_mail) REFERENCES mail(id_mail);
 ALTER TABLE destinataire_mail ADD CONSTRAINT FK_destinataire_mail_id_groupe FOREIGN KEY (id_groupe) REFERENCES groupe(id_groupe);
+ALTER TABLE `etudie_en` CHANGE `moyenne` `moyenne` FLOAT NULL;
 

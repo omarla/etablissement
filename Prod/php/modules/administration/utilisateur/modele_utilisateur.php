@@ -1,10 +1,10 @@
 <?php
-    require_once "php/verify.php";
-    require_once "php/common/Database.php";
-    require_once "php/common/classes/user/utilisateur.php";
-    require_once "php/common/classes/user/personnel.php";
-    require_once "php/common/classes/user/enseignant.php";
-    require_once "php/common/classes/droits.php";
+    require_once __DIR__ ."/../../../verify.php";
+    require_once __DIR__ ."/../../../common/Database.php";
+    require_once __DIR__ ."/../../../common/classes/user/utilisateur.php";
+    require_once __DIR__ ."/../../../common/classes/user/personnel.php";
+    require_once __DIR__ ."/../../../common/classes/user/enseignant.php";
+    require_once __DIR__ ."/../../../common/classes/droits.php";
 
     class ModeleUtilisateur extends Database
     {
@@ -22,44 +22,65 @@
         
         public function getListeUtilisateurs()
         {
-            return Utilisateur::getListeUtilisateurs();
+            try{
+                return Utilisateur::getListeUtilisateurs();
+            }catch(PDOException $e) {
+               $this->cont->afficherErreur(DEFAULT_ERROR_TITLE, "Nous n'avons pas pû récupérer la liste des utilisateur. Veuillez réessayer plus tard");
+            }
         }
 
 
         public function getUtilisateur($param)
         {
-            if (is_numeric($param)) {
-                return Utilisateur::getUtilisateurParId($param);
-            } else {
-                return Utilisateur::getUtilisateurParPseudo($param);
+            try{
+                $utilisateur = new Utilisateur($param, $param);
+                return $utilisateur->informations_utilisateur();
+            }catch(PDOException $e){                
+                $this->cont->afficherErreur(DEFAULT_ERROR_TITLE, "Nous n'avons pas pû récupérer cet utilisateur. Veuillez réessayer plus tard");
+            }catch(ElementIntrouvable $e){
+                $this->cont->afficherErreur(DEFAULT_ERROR_TITLE, "Cet utilisateur est introuvable");
             }
         }
 
 
         public function insertUser($data)
         {
-            $data['pays_naissance'] =  $this->getCodePays($data['pays_naissance']);
-            Utilisateur::insertUser($data);
-            header('Location: index.php?module=administration&type=utilisateur&action=liste_utilisateurs');
+            try{
+                $data['pays_naissance'] =  $this->getCodePays($data['pays_naissance']);
+                Utilisateur::insertUser($data);    
+            }catch(PDOException $e){
+                $this->cont->afficherErreur(DEFAULT_ERROR_TITLE, "Nous n'avons pas pû insérer cet utilisateur.");
+            }
         }
 
         public function modifierUtilisateur($data, $id)
         {
-            $data['pays_naissance'] =  $this->getCodePays($data['pays_naissance']);
             
-            Utilisateur::modifierUtilisateur($data, $id);
+            $data['pays_naissance'] =  $this->getCodePays($data['pays_naissance']);
+            try{
+                $utilisateur = new Utilisateur($id, $id);
 
-            if (strlen($data['mot_de_passe']) > 3) {
-                Utilisateur::modifierMDPUtilisateur($id, $data['mot_de_passe']);
+                $utilisateur->modifierUtilisateur($data);
+                if (strlen($data['mot_de_passe']) > 3) {
+                    $utilisateur->modifierMDPUtilisateur($data['mot_de_passe']);
+                }    
+            }catch(PDOException $e){
+                $this->cont->afficherErreur(DEFAULT_ERROR_TITLE, "La modification de l'utilisateur " . $id . " a échouée");
+            }catch(ElementIntrouvable $e){
+                $this->cont->afficherErreur(DEFAULT_ERROR_TITLE, "Cet utilisateur est introuvable");
             }
-
-            header('Location: index.php?module=administration&type=utilisateur&action=liste_utilisateurs');
         }
 
         public function supprimerUtilisateur($id)
         {
-            Utilisateur::supprimerUtilisateur($id);
-            header('Location: index.php?module=administration&type=utilisateur&action=liste_utilisateurs');
+            try{
+                $utilisateur = new Utilisateur($id, $id);
+                $utilisateur->supprimerUtilisateur();
+            }catch(PDOException $e){
+                $this->cont->afficherErreur(DEFAULT_ERROR_TITLE, "Attention, cet utilisateur n'a pas été supprimé.");
+            }catch(ElementIntrouvable $e){
+                $this->cont->afficherErreur(DEFAULT_ERROR_TITLE, "Cet utilisateur est introuvable");
+            }
         }
 
 
@@ -76,57 +97,86 @@
 
         public function getListePersonnels()
         {
-            return Personnel::getListePersonnels();
+            try{
+                return Personnel::getListePersonnels();
+            }catch(Exception $e){
+                $this->cont->afficherErreur(DEFAULT_ERROR_TITLE, "Erreur lors de la récupération de la liste du personnel");
+            }
         }
 
         public function getPersonnel($id)
         {
-            return Personnel::getPersonnel($id);
+            try{
+                $personnel = new Personnel($id);
+                return $personnel->informations_personnel();
+            }catch(PDOException $e){
+                $this->cont->afficherErreur(DEFAULT_ERROR_TITLE, "Erreur lors du chargement des données du personnel n° " . $id);
+            }catch(ElementIntrouvable $e){
+                $this->cont->afficherErreur(DEFAULT_ERROR_TITLE, "Aucun personnel n'a cet identifiant");
+            }
         }
 
 
         public function ajouterPersonnel($pseudo, $estEnseignant)
         {
+
             self::$db->beginTransaction();
 
-            $utilisateur = Utilisateur::getUtilisateurParPseudo($pseudo);
+            try{
+                $utilisateur = new Utilisateur('', $pseudo);
             
-            Personnel::ajouterPersonnel($utilisateur);
-            
-            if ($estEnseignant) {
-                $id_personnel = self::getLastInsertId();
+                Personnel::ajouterPersonnel($utilisateur->getIdUtilisateur());
                 
-                Enseignant::ajouterEnseignant($id_personnel);
+                if ($estEnseignant) {
+                    $id_personnel = self::getLastInsertId();
+                    Enseignant::ajouterEnseignant($id_personnel);
+                }
+    
+                self::$db->commit();    
+            }catch(PDOException $e){
+                $this->cont->afficherErreur(DEFAULT_ERROR_TITLE, "Attention ce personnel n'a pas été ajouté : Pseudo = " . $pseudo);
+            }catch(ElementIntrouvable $e){
+                $this->cont->afficherErreur(DEFAULT_ERROR_TITLE, "Cet utilisateur est introuvable");
             }
 
-            self::$db->commit();
-
-            header('Location: index.php?module=administration&type=utilisateur&action=liste_personnels');
         }
 
         public function modifierPersonnel($id_personnel, $est_enseignant, $heures_travail)
         {
             self::$db->beginTransaction();
 
-            $personnel = Personnel::getPersonnel($id_personnel);
-           
-            Personnel::modifierHeuresTravail($id_personnel, $heures_travail);
+            try{
+                $personnel = new Personnel($id_personnel);
 
-            if (null === $personnel['id_enseignant'] && $est_enseignant) {
-                Enseignant::ajouterEnseignant($id_personnel);
-            } elseif (null !== $personnel['id_enseignant'] && !$est_enseignant) {
-                Enseignant::supprimerEnseignant($id_personnel);
+                $informations_personnel = $personnel->informations_personnel();
+
+                $personnel->modifierHeuresTravail($heures_travail);
+    
+                if (null === $informations_personnel['id_enseignant'] && $est_enseignant) {
+                    Enseignant::ajouterEnseignant($id_personnel);
+                } elseif (null !== $informations_personnel['id_enseignant'] && !$est_enseignant) {
+                    Enseignant::supprimerEnseignant($id_personnel);
+                }
+                self::$db->commit();    
+            }catch(PDOException $e){
+                $this->cont->afficherErreur(DEFAULT_ERROR_TITLE, "La modification de ce personnel a échouée. Veuillez réessayer plus tard" );
+            }catch(ElementIntrouvable $e){
+                $this->cont->afficherErreur(DEFAULT_ERROR_TITLE, "Aucun personnel ne porte cet identifiant");
             }
-
-            self::$db->commit();
             
-            header('Location: index.php?module=administration&type=utilisateur&action=liste_personnels');
         }
 
         public function supprimerPersonnel($id_personnel)
         {
-            Enseignant::supprimerEnseignant($id_personnel);
-            Personnel::supprimerPersonnel($id_personnel);
+            try{
+                $personnel = new Personnel($id_personnel);
+                Enseignant::supprimerEnseignant($id_personnel);
+                $personnel->supprimerPersonnel();    
+            }catch(PDOException $e){
+                $this->cont->afficherErreur(DEFAULT_ERROR_TITLE, "La suppression de ce personnel a échouée. Veuillez réessayer plus tard");
+            }catch(ElementIntrouvable $e){
+                $this->cont->afficherErreur(DEFAULT_ERROR_TITLE, "Aucun personnel ne porte cet identifiant");
+            }
         }
 
 
@@ -144,8 +194,12 @@
         {
             $liste_droits = array();
 
-            foreach (Droits::getListeDroits() as $droits) {
-                array_push($liste_droits, $droits['nom_droits']);
+            try{
+                foreach (Droits::getListeDroits() as $droits) {
+                    array_push($liste_droits, $droits['nom_droits']);
+                }    
+            }catch(Exception $e){
+                $this->cont->afficherErreur(DEFAULT_ERROR_TITLE, "Impossible de récupérer la liste des droits possibles");   
             }
 
             return $liste_droits;
@@ -158,17 +212,20 @@
     
         public function getCodePays($nomPays)
         {
+         
             $stmt = self::$db->prepare("select code_pays from pays where nom_pays = ?");
            
             $result = false;
 
             try {
                 $stmt->execute(array($nomPays));
-                
                 $result = $stmt->fetch(PDO::FETCH_ASSOC)['code_pays'];
-            } catch (PDOException $e) {
-                //TODO
+            } catch (Exception $e) {
+                $this->cont->afficherErreur(DEFAULT_ERROR_TITLE, "Le code pays est érronée");   
             }
+
+            if($result == null)
+                $this->cont->afficherErreur(DEFAULT_ERROR_TITLE, "Le code pays est érronée");   
             
             return $result;
         }

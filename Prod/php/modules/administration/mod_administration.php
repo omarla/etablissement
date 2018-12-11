@@ -3,17 +3,17 @@
     require_once __DIR__ . "/droits/mod_droits.php";
     require_once __DIR__ . "/groupe/mod_groupe.php";
     require_once __DIR__ . "/semestre/mod_semestre.php";
-
+    require_once __DIR__ . "/vue_administration.php";
     class ModAdministration
     {
         public function __construct()
         {
-            $type = isset($_GET['type']) ? $_GET['type'] : null;
+            $type = isset($_GET['type']) ? htmlspecialchars($_GET['type']) : null;
 
-            require_once __DIR__ . "/html/administration-1.php";
+            $vue = new VueAdministration($type);
 
             switch ($type) {
-                case 'utilisateur':
+                case 'utilisateur': case 'personnel':
                     $mod = new ModUtilisateur();
                 break;
 
@@ -30,7 +30,8 @@
                 break;
                 
                 default:
-                    header("Location: index.php?module=error&title=action invalide&message=".INVALID_ACTION_ERROR_MESSAGE);
+                    header("Location: index.php?module=error&title=Action invalide&message=".INVALID_ACTION_ERROR_MESSAGE);
+                    exit(0);
             }
 
             require_once __DIR__ . "/html/administration-2.html";

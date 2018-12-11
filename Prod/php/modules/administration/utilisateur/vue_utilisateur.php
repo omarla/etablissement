@@ -1,6 +1,6 @@
 <?php
-    require_once "php/verify.php";
-    require_once "php/common/vue_generique.php";
+    require_once __DIR__ . "/../../../verify.php";
+    require_once __DIR__ . "/../../../common/vue_generique.php";
 
     class VueUtilisateur extends VueGenerique
     {
@@ -27,24 +27,27 @@
 
         public function afficherListeUtilisateurs($liste_utilisateurs)
         {
-            require_once __DIR__ . "/html/utilisateur/afficher_utilisateurs_1.php";
+            echo '<h2 class="text-center text-dark underline mb-4 pt-2 underline">
+                    Liste des utilisateurs
+                  </h2>';
+          
+            $this->afficherTableau(
+              $liste_utilisateurs,
+              array('id', 'nom', 'prenom', 'tel', 'mail', 'date_naissance'),
+              'index.php?module=administration&action=modification&type=utilisateur&id=',
+              'id',
+              array('#', 'nom', 'prénom', 'n° tel', 'mail', 'date de naissance')
+            );
             
-            foreach ($liste_utilisateurs as $utilisateur) {
-                echo "            
-                    
-                        <tr onclick=\"document.location = 'index.php?module=administration&action=modification&type=utilisateur&id=${utilisateur['id']}'\">
-                            <td class='text-primary'>${utilisateur['id']}</td>
-                            <td>${utilisateur['nom']}</td>
-                            <td>${utilisateur['prenom']}</td>
-                            <td>${utilisateur['tel']}</td>
-                            <td>${utilisateur['mail']}</td>
-                            <td>${utilisateur['date_naissance']}</td>
-                        </tr>
-                        
-                    ";
-            }
-
-            require_once __DIR__ . "/html/utilisateur/afficher_utilisateurs_2.php";
+            echo '
+            <div class="container-fluid row justify-content-center mx-0 mb-2">
+              <div class="col-md-8 row justify-content-center">
+                  <a href="index.php?module=administration&type=utilisateur&action=afficherCreationUtilisateur">
+                    <button class="btn btn-outline-success">Ajouter</button>
+                  </a>
+              </div>
+            </div>
+            ';
         }
 
 
@@ -59,7 +62,7 @@
                 Profil de ${utilisateur['pseudo_utilisateur']}
               </h2>
               
-              <form class='pb-2' method='post' action='index.php?module=administration&type=utilisateur&action=modification_utilisateur&id=${utilisateur['id_utilisateur']}'>
+              <form class='pb-2' autocomplete='off' method='post' action='index.php?module=administration&type=utilisateur&action=modification_utilisateur&id=${utilisateur['id_utilisateur']}'>
                 <div class='form-row'>
                   <div class='form-group col-md-4'>
                     <label for='nom'>Nom</label>
@@ -155,8 +158,8 @@
                   <div class='form-group col-md-4'>
                     <label for='ville'>Ville</label>
                     <input 
+                        placeholder='nom ville'
                         type='text' 
-                        list='villes' 
                         class='form-control' 
                         id='ville' 
                         value='${utilisateur['nom_ville']}'
@@ -166,7 +169,7 @@
                     <label for='code_postal'>Code postal</label>
                     <input
                       type='text'
-                      list='codes_postal'
+                      placeholder='code postal'
                       class='form-control'
                       id='code_postal'
                       name='code_postal'
@@ -177,7 +180,7 @@
                   <div class='form-group col-md-4'>
                     <label for='pays_naissance' >Pays naissance</label>
                     <input  id='pays_naissance' 
-                            list='pays' type='text'
+                            placeholder='pays de naissance'
                             name='pays_naissance'
                             class='form-control' 
                             value='${utilisateur['nom_pays']}'
@@ -204,10 +207,19 @@
                   <div class='form-group col-md-6 '>
                     <label for='droits'>Droits</label>
                 ";
+
                 $this->afficherListeDroits($liste_droits, '');
 
-                require_once __DIR__ . "/html/utilisateur/afficher_utilisateur_end.php";
-                ;
+                echo '
+                </div>
+                  </div>
+                
+                  <div class="container-fluid row justify-content-around">
+                    <button type="submit" name="modifier" class="btn btn-outline-primary ">Modifier</button>
+                    <button type="submit" name="supprimer" class="btn btn-outline-danger ">Supprimer</button>
+                  </div>
+                
+                </form>';
             }
         }
 
@@ -220,6 +232,7 @@
    
         public function afficherListePersonnels($liste_personnels)
         {
+
             require_once __DIR__ . "/html/personnel/afficher_liste_personnel_1.php";
   
 

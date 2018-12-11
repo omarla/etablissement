@@ -5,10 +5,10 @@
     {
         protected static $db;
 
-        public function initConnexion()
+        public static function initConnexion()
         {
             try {
-                self::$db = new PDO('mysql:host=localhost;dbname=dutinfopw201822', "root", "najymahe");
+                self::$db = new PDO('mysql:host=localhost;dbname=dutinfopw201822;charset=utf8', "root", "najymahe");
                 self::$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             } catch (PDOException $e) {
                 header("Location: index.php?module=error&title=Problème Serveur&message=".DATABASE_ERROR_MESSAGE);

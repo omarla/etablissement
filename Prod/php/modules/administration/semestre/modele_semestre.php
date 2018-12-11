@@ -27,7 +27,7 @@
             try {
                 Semestre::ajouter_semestre($ref, $nom, $points_ets);
             } catch (PDOException $e) {
-                echo $e->getMessage();
+                $this->cont->afficherErreur(DEFAULT_ERROR_TITLE, "Erreur lors de la récupération de la liste des semestres");
             }
         }
 
@@ -37,19 +37,57 @@
             try {
                 $semestre = new Semestre($id);
 
-                //Initialisation
                 $semestre->detailsSemestre();
                 $semestre->anneesSemestre();
                 $semestre->etudiantsSemestre();
             
                 return $semestre;
             } catch (PDOException $e) {
-                echo $e->getMessage();
+                $this->cont->afficherErreur(DEFAULT_ERROR_TITLE, "Erreur lors de la récupération des données du semestre");
+            }catch(ElementIntrouvable $e){
+                $this->cont->afficherErreur("Semestre inéxistant", "Il n'existe aucun semestre avec la référence ". $id);
             }
         }
 
         public function annee_courante()
         {
             return self::getDBYear();
+        }
+
+        public function modifier_semestre($ref, $nom, $pts_ets)
+        {
+            try {
+                $semestre = new Semestre($ref);
+                $semestre->modifierSemestre($nom, $pts_ets);
+            } catch (PDOException $e) {
+                $this->cont->afficherErreur(DEFAULT_ERROR_TITLE, "Erreur lors de la modification du semestre : ". $ref);
+            }catch(ElementIntrouvable $e){
+                $this->cont->afficherErreur("Semestre inéxistant", "Il n'existe aucun semestre avec la référence ". $id);
+            }
+        }
+
+        public function retirer_etudiant($ref, $num_etudiant)
+        {
+            try {
+                $semestre = new Semestre($ref);
+                $semestre->retirerEtudiant($num_etudiant);
+            } catch (PDOException $e) {
+                $this->cont->afficherErreur(DEFAULT_ERROR_TITLE, "Nous n'avons pas pû retirer l'étudiant " .$num_etudiant . " de la liste des étudiants de cette année");
+            }catch(ElementIntrouvable $e){
+                $this->cont->afficherErreur("Semestre inéxistant", "Il n'existe aucun semestre avec la référence ". $id);
+            }
+        }
+
+
+        public function supprimer_semestre($ref)
+        {
+            try {
+                $semestre = new Semestre($ref);
+                $semestre->supprimerSemestre();
+            } catch (PDOException $e) {
+                $this->cont->afficherErreur(DEFAULT_ERROR_TITLE, "Nous n'avons pas pû supprimer le semestre : " .$ref);
+            }catch(ElementIntrouvable $e){
+                $this->cont->afficherErreur("Semestre inéxistant", "Il n'existe aucun semestre avec la référence ". $id);
+            }
         }
     }
