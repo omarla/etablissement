@@ -17,17 +17,17 @@
             try {
                 return Semestre::liste_semestres();
             } catch (PDOException $e) {
-                echo $e->getMessage();
+                $this->cont->afficherErreur(DEFAULT_ERROR_TITLE, "Impossible de récupérer la liste des semestres");
             }
         }
 
 
-        public function ajouter_semestre($ref, $nom, $points_ets)
+        public function ajouter_semestre($ref, $nom, $points_ets, $periode)
         {
             try {
-                Semestre::ajouter_semestre($ref, $nom, $points_ets);
+                Semestre::ajouter_semestre($ref, $nom, $points_ets, $periode);
             } catch (PDOException $e) {
-                $this->cont->afficherErreur(DEFAULT_ERROR_TITLE, "Erreur lors de la récupération de la liste des semestres");
+                $this->cont->afficherErreur(DEFAULT_ERROR_TITLE, "Erreur lors de l'ajout du semestre");
             }
         }
 

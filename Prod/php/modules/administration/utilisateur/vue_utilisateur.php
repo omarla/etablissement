@@ -54,6 +54,9 @@
         public function afficherUtilisateur($utilisateur, $liste_droits)
         {
             if ($utilisateur) {
+
+                $utilisateur['genre'] = $utilisateur['genre'] ? 1 : 0;
+                
                 echo "
                 <h2
                 class='text-center text-dark underline mb-4 pt-2 '
@@ -134,10 +137,10 @@
                         id='civilite' 
                         name='est_homme' 
                         class='form-control' 
-                        value='value='${utilisateur['est_homme_utilisateur']}'
+                        value='${utilisateur['genre']}'
                         required>
-                      <option value='1'>Monsieur</option>
-                      <option value='0'>Madame</option>
+                      <option value='true' ".($utilisateur['genre'] ? "selected" : '').">Monsieur</option>
+                      <option value='false' ".(!$utilisateur['genre'] ? "selected" : '').">Madame</option>
                     </select>
                   </div>
                   <div class='form-group col-md-8'>
@@ -268,7 +271,7 @@
     
             <form class="pb-2" method="post" action="index.php?module=administration&type=utilisateur&action=modifier_personnel&id='.$personnel['id_personnel'].'">
             
-                <div class="justify-content-center row container-fluid">
+                <div class="justify-content-center small-table row container-fluid">
                     <table class="table table-striped text-center table-hover table-bordered col-md-6 col-lg-5">
                         <thead class="thead-dark ">
                             <tr>
@@ -279,7 +282,7 @@
             
                         <tbody>
                             <tr>
-                                <td>'.$personnel['annee_courante'].'</td>
+                                <td class="align-middle">'.$personnel['annee_courante'].'</td>
                                 <td>
                                     <input type="number" min="0" value="' .$heures_travail_courants . '" class="form-control table-input" name="heures_travail" />
                                 </td>

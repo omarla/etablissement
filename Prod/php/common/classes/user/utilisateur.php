@@ -16,21 +16,21 @@
         private static $insertUserQuery         = 'insert into utilisateur values(
                                                     default, ?, ?, ?,
                                                     ?, ?, ?, ?, ?, ?,
-                                                    ?,current_date(), 
+                                                    ?,now(), 
                                                     ?, ?, ?)';
 
         private static $modifyUserQuery         = "update utilisateur 
                                                     set mail_utilisateur = ?, nom_utilisateur = ?,
                                                     prenom_utilisateur = ?, tel_utilisateur = ?,
-                                                    adresse_utilisateur = ?, est_homme_utilisateur = ?,
+                                                    adresse_utilisateur = ?, genre = ?,
                                                     date_naissance_utilisateur = ?, nom_droits = ?,
                                                     code_pays = ?, code_postal_ville = ?
                                                     where id_utilisateur = ?";
        
-        private static $modifyUserPasswordQuery = "update utilisateur set mot_de_passe_utilisateur = ?";
+        private static $modifyUserPasswordQuery = "update utilisateur set mot_de_passe_utilisateur = ? where id_utilisateur = ?";
     
     
-        private static $deleteUserQuery       = "delete from utilisateur where id_utilisateur = :id_utilisateur";
+        private static $deleteUserQuery         = "delete from utilisateur where id_utilisateur = :id_utilisateur";
     
         private $id_utilisateur;
         private $informations_utilisateur;

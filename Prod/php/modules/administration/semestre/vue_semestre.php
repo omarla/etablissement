@@ -43,6 +43,8 @@
                             required value = "'.$semestre['points_ets_semestre'].'"/>
                     </div>
                 </div>
+
+                
             
                 <div class="container-fluid row justify-content-center">
                     <button type="submit" class="btn btn-outline-primary mb-2">Modifier</button>
@@ -74,16 +76,6 @@
                 }
             );
 
-            echo '
-            <form class="form-inline">
-                <div class="container-fluid row mt-3 justify-content-around">
-                    <div class="container col-md-9 row justify-content-around">
-                        <label class="col-md-6">Numéro etudiant</label>
-                        <input type="text" class="form-control col-md-6" />
-                    </div>
-                    <button type="submit" class="btn btn-success mb-2" disabled>Ajouter</button>
-                </div>
-            </form>';
 
             echo '</fieldset>';
 

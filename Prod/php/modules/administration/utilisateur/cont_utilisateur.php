@@ -42,7 +42,7 @@
                 $data = array_map(function($el){return htmlspecialchars($el);},$_POST);
                 $this->modele->insertUser($data);
             } else {
-                $this->afficherErreur(NOT_ENOUGH_PARAM_TITLE, $message_erreur);
+                $this->afficherErreur(NOT_ENOUGH_PARAM_TITLE, 'Pas assez de paramètres');
             }
 
             header('Location: index.php?module=administration&type=utilisateur&action=liste_utilisateurs');
@@ -80,16 +80,17 @@
 
                 if (isset($_POST['modifier'])) {
                     $this->modele->modifierUtilisateur($data, $id);
-                    header('Location: index.php?module=administration&type=utilisateur&action=modification&id='. $_GET['id']);
                 } elseif (isset($_POST['supprimer'])) {
                     $this->modele->supprimerUtilisateur($id);
-                    header('Location: index.php?module=administration&type=utilisateur&action=liste_utilisateurs');
                 } else {
                     $this->afficherErreur('Action invalide', "Vous n'avez fournis aucune action");
                 }
             } else {
                 $this->afficherErreur(NOT_ENOUGH_PARAM_TITLE, NOT_ENOUGH_PARAM_MESSAGE);
             }
+
+            header('Location: index.php?module=administration&type=utilisateur&action=liste_utilisateurs');
+
 
         }
 

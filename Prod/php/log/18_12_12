@@ -1,0 +1,33 @@
+
+
+*************************************************
+Date      :   12122018 21:32:03
+Titre     :   Erreur
+Message   :   
+File      :   
+Line      :   
+*************************************************
+
+
+
+
+*************************************************
+Date      :   12122018 21:32:08
+Titre     :   Paramètre insuffisants
+Message   :   Undefined variable: message_erreur
+File      :   /home/24IUT/Desktop/Projet_Web/etablissement/Prod/php/modules/administration/utilisateur/cont_utilisateur.php
+Line      :   45
+*************************************************
+
+
+
+
+*************************************************
+Date      :   12122018 21:32:14
+Titre     :   Paramètre insuffisants
+Message   :   Undefined variable: message_erreur
+File      :   /home/24IUT/Desktop/Projet_Web/etablissement/Prod/php/modules/administration/utilisateur/cont_utilisateur.php
+Line      :   45
+*************************************************
+
+

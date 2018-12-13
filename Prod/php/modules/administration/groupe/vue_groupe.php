@@ -1,6 +1,6 @@
 <?php
-    require_once "php/verify.php";
-    require_once "php/common/vue_generique.php";
+    require_once __DIR__ . "/../../../verify.php";
+    require_once __DIR__ . "/../../../common/vue_generique.php";
 
     class VueGroupe extends VueGenerique
     {
@@ -67,7 +67,7 @@
 
             $tab_utilisateurs = $this->transformerEnTableauSuppression(
                 $liste_utilisateurs,
-                array('pseudo_utilisateur', 'niveau'),
+                array('pseudo_utilisateur', 'niveau', 'periode'),
                 'id_utilisateur',
                 'index.php?module=administration&type=groupe&action=retirer_utilisateur&id_groupe='.$groupe['id_groupe'].'&id_utilisateur='
             );
@@ -92,6 +92,7 @@
                         <tr>
                             <th scope="col">Pseudo</th>
                             <th scope="col">Status</th>
+                            <th scope="col">Période</th>
                             <th scope="col">Retirer</th>
                         </tr>
                     </thead>
@@ -100,12 +101,12 @@
                     </tbody>
                 </table>
                 <form class="form-inline" method="post" action="index.php?module=administration&type=groupe&action=ajouter_utilisateur&id_groupe='.$groupe['id_groupe'].'">
-                    <div class="container-fluid row justify-content-around">
-                        <div class="container col-md-9 row justify-content-around">
-                            <label class="col-md-4 pb-2">Pseudo</label>
-                            <input type="text" id="pseudo_utilisateur" list="pseudos_utilisateurs" name="pseudo_utilisateur" class="form-control col-md-6" />
+                    <div class="container-fluid row justify-content-around mt-3 mb-3">
+                        <div class="container col-9 row justify-content-around py-0 my-0">
+                            <label class="col-4 pt-1">Pseudo</label>
+                            <input type="text" id="pseudo_utilisateur" list="pseudos_utilisateurs" name="pseudo_utilisateur" class="form-control col-8" />
                         </div>
-                        <button type="submit" class="btn btn-success mb-2">Ajouter</button>
+                        <button type="submit" class="btn btn-success">Ajouter</button>
                     </div>
                     <datalist id="pseudos_utilisateurs"></datalist>
                 </form>
@@ -131,18 +132,26 @@
                 </table>
         
                 <form class="form-inline mb-4" method="post" action="index.php?module=administration&type=groupe&action=ajouter_sous_groupe&id_groupe='.$groupe['id_groupe'].'">
-                    <div class="container-fluid row justify-content-around">
-                        <div class="container col-md-9 row justify-content-around">
-                            <label class="col-md-4 pb-2">id groupe</label>
-                            <input type="text" class="form-control col-md-6" list="groupes_fils" id="groupe_fils"  name="groupe_fils"/>
+                    <div class="container-fluid row justify-content-around mt-2">
+                        <div class="container col-9 row justify-content-around py-0 my-0">
+                            <label class="col-4 pt-2">groupe</label>
+                            <input type="text" class="form-control col-8" list="groupes_fils" id="groupe_fils"  name="groupe_fils"/>
                         </div>
-                        <button type="submit" class="btn btn-success mb-2">Ajouter</button>
+                        <button type="submit" class="btn btn-success ">Ajouter</button>
                     </div>
                     <datalist id="groupes_fils">
                     </datalist>
                 </form>
         
             </div>
-        </fieldset>';
+        </fieldset>
+        
+        <div class="container-fluid row justify-content-center mt-3">
+            <a href="index.php?module=administration&type=groupe&action=supprimer_groupe&id='.$groupe['id_groupe'].'">
+                <button class="btn-outline-danger col-auto btn">Supprimer</button> 
+            </a>
+        </div>
+        
+        ';
         }
     }

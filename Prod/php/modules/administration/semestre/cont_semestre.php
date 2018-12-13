@@ -27,8 +27,9 @@
             $ref = isset($_POST['reference']) ? htmlspecialchars($_POST['reference']) : die('Pas de réf');
             $nom = isset($_POST['nom_semestre']) ? htmlspecialchars($_POST['nom_semestre']) : die('Pas de nom');
             $pts_ets = isset($_POST['points_ets']) ? htmlspecialchars($_POST['points_ets']) : die('Pas de points ets');
+            $periode = isset($_POST['periode']) ? htmlspecialchars($_POST['periode']) : die('Pas de période');
 
-            $this->modele->ajouter_semestre($ref, $nom, $pts_ets);
+            $this->modele->ajouter_semestre($ref, $nom, $pts_ets, $periode);
 
             header('Location: index.php?module=administration&type=semestre&action=liste_semestre');
         }

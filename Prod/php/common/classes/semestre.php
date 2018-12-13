@@ -7,38 +7,38 @@
       private static $semestreQuery         = "select * from semestre where ref_semestre = :ref";
 
 
-      private static $semestreYearsQuery    = "select annee, 
+      private static $semestreYearsQuery    = "select date_debut::varchar || ' => ' || date_fin::varchar as annee, 
                                                 avg(moyenne) as moyenne,
-                                                sum(case when est_valide = 1 then 1 else 0 end) as nombre_reussite,
-                                                sum(case when est_valide = 0 then 1 else 0 end) as nombre_echecs,
-                                                round(sum(case when est_valide = 1 then 1 else 0 end) / count(ref_semestre), 2) as taux_reussite,
-                                                round(sum(case when est_valide = 0 then 1 else 0 end) / count(ref_semestre), 2) as taux_echecs
+                                                sum(case when est_valide then 1 else 0 end) as nombre_reussite,
+                                                sum(case when not est_valide then 1 else 0 end) as nombre_echecs,
+                                                round(sum(case when est_valide then 1 else 0 end) / count(ref_semestre), 2) as taux_reussite,
+                                                round(sum(case when not est_valide then 1 else 0 end) / count(ref_semestre), 2) as taux_echecs
                                                 from etudie_en 
                                                 where ref_semestre = :ref
-                                                group by ref_semestre, annee
+                                                group by ref_semestre, date_debut::varchar || ' => ' || date_fin::varchar
                                                 order by annee desc";
 
-      private static $semestreStudents      = "select annee, etudiant.num_etudiant, nom_utilisateur, prenom_utilisateur, moyenne
-                                                from etudie_en inner join etudiant on (etudie_en.num_etudiant = etudiant.num_etudiant)
-                                                inner join utilisateur on (utilisateur.id_utilisateur = etudiant.id_utilisateur)
+      private static $semestreStudents      = "select date_debut::varchar || ' => ' || date_fin::varchar as annee, etudiant.num_etudiant, nom_utilisateur, prenom_utilisateur, moyenne
+                                                from etudie_en inner join etudiant using(num_etudiant)
+                                                inner join utilisateur using (id_utilisateur)
                                                 where ref_semestre = :ref 
                                                 order by annee desc
                                                 ";
 
       private static $allSemestresQuery     = "select semestre.*, 
-                                                sum(case when est_valide = 1 then 1 else 0 end) as nombre_reussite,
-                                                sum(case when est_valide = 0 then 1 else 0 end) as nombre_echoue
-                                                from semestre left join etudie_en on(semestre.ref_semestre = etudie_en.ref_semestre)
+                                                sum(case when est_valide then 1 else 0 end) as nombre_reussite,
+                                                sum(case when not est_valide then 1 else 0 end) as nombre_echoue
+                                                from semestre left join etudie_en using(ref_semestre)
                                                 group by ref_semestre
                                                 ";
 
-      private static $insertSemestreQuery   = "insert into semestre values(:ref, :nom, :pts_ets)";
+      private static $insertSemestreQuery   = "insert into semestre values(:ref, :nom, :pts_ets, :periode)";
 
 
       private static $updateSemestreQuery   = "update semestre set nom_semestre = :nom, points_ets_semestre = :pts_ets where ref_semestre = :ref";
 
 
-      private static $deleteStudentQuery    = "delete from etudie_en where ref_semestre = :ref and num_etudiant = :num_etudiant and annee = :annee_courante";
+      private static $deleteStudentQuery    = "delete from etudie_en where ref_semestre = :ref and num_etudiant = :num_etudiant and date_debut = :debut";
 
       private static $deleteSemestreQuery   = "delete from semestre where ref_semestre = :ref";
 
@@ -120,7 +120,7 @@
 
           $stmt->bindValue(":ref", $this->ref_semestre);
           $stmt->bindValue(":num_etudiant", $num_etudiant);
-          $stmt->bindValue(":annee_courante", self::getDBYear());
+          $stmt->bindValue(":debut", explode(" => ",self::getDBYear())[0]);
           
           $stmt->execute();
       }
@@ -146,13 +146,14 @@
       }
 
 
-      public static function ajouter_semestre($ref, $nom, $points_ets)
+      public static function ajouter_semestre($ref, $nom, $points_ets, $periode)
       {
           $stmt = self::$db->prepare(self::$insertSemestreQuery);
 
           $stmt->bindValue(':ref', $ref);
           $stmt->bindValue(':nom', $nom);
           $stmt->bindValue(':pts_ets', $points_ets);
+          $stmt->bindValue(':periode', $periode);
 
           $stmt->execute();
       }

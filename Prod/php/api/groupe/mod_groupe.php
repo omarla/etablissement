@@ -6,11 +6,10 @@
     {
         public function __construct()
         {
-            $debut = isset($_GET['start']) ? strtolower($_GET['start']) : Response::send_error(HTTP_BAD_REQUEST, 'Paramètre start est absent');
             $action = isset($_GET['action']) ? strtolower($_GET['action']) : Response::send_error(HTTP_BAD_REQUEST, 'Paramètre action est absent');
             $id_groupe = isset($_GET['id']) && is_numeric($_GET['id']) ? $_GET['id'] : Response::send_error(HTTP_BAD_REQUEST, 'Id groupe invalid');
 
-            $modele = new ModeleGroupe($id_groupe, $debut);
+            $modele = new ModeleGroupe($id_groupe);
 
             switch ($action) {
                 case 'utilisateurs':

@@ -46,8 +46,6 @@
                     $cont->modifierPersonnel();
                 break;
 
-
-
                 default:
                     header("Location: index.php?module=error&title=Type invalide&message=".INVALID_TYPE_ERROR_MESSAGE);
             }

@@ -10,7 +10,7 @@
 
         <div class="form-group col-md-4 col-6">
           <label for="pseudo" class="sr-only">Pseudo</label>
-          <input type="text" class="form-control" list="pseudo_list" id="pseudo" name="pseudo" placeholder="Pseudo utilisateur"
+          <input type="text" class="form-control"  id="pseudo" name="pseudo" placeholder="Pseudo utilisateur"
             required />
         </div>
 
@@ -28,8 +28,5 @@
       </div>
     </div>
   </fieldset>
-
-  <datalist id="pseudo_list">
-  </datalist>
 
 </form>

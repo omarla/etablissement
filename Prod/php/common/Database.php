@@ -8,7 +8,7 @@
         public static function initConnexion()
         {
             try {
-                self::$db = new PDO('mysql:host=localhost;dbname=dutinfopw201822;charset=utf8', "root", "najymahe");
+                self::$db = new PDO('pgsql:host=localhost;dbname=dutinfopw201622', "projet_web", "najymahe");
                 self::$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             } catch (PDOException $e) {
                 header("Location: index.php?module=error&title=Problème Serveur&message=".DATABASE_ERROR_MESSAGE);
@@ -21,33 +21,22 @@
         }
         
 
-        public static function getLastInsertId()
-        {
-            $stmt = self::$db->prepare("select LAST_INSERT_ID()");
-            $stmt->execute();
-            return $stmt->fetch(PDO::FETCH_NUM)[0];
-        }
-
         public static function getDBYear()
         {
-            $stmt = self::$db->prepare("select max(annee) from annee");
+            $stmt = self::$db->prepare("select date_debut, date_fin from periode_semestre where date_fin = (select max(date_fin) from periode_semestre)");
             
             $stmt->execute();
  
-            $result = $stmt->fetch();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
  
-            $current_year = Date::getYearBeforeMonth(8);
-
-            if (false === $result || $current_year != $result[0]) {
-                $stmtInsert = self::$db->prepare("insert into annee values (:annee)");
+            $current_interval = Date::getPeriodeCourante();
+            
+            if (false === $result || $current_interval['debut'] !== $result['date_debut']) {
+                $stmtInsert = self::$db->prepare("insert into periode_semestre values (:debut, :fin)");
                 
-                $stmtInsert->bindValue(":annee", $current_year);
-                
-                $stmtInsert->execute();
-
-                $result = array($current_year);
+                $stmtInsert->execute($current_interval);
             }
 
-            return $result[0];
+            return $current_interval['debut'] . " => " . $current_interval['fin'];
         }
     }

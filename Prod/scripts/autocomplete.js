@@ -44,7 +44,7 @@ if (
 
 if (
   initVars.url.module === "administration" &&
-  initVars.url.type === "utilisateur" &&
+  initVars.url.type === "personnel" &&
   initVars.url.action === "liste_personnels"
 ) {
   $("input#pseudo").flexdatalist({
@@ -53,6 +53,35 @@ if (
     visibleProperties: "pseudo",
     searchIn: "pseudo",
     valueProperty: "pseudo",
+    cache: false,
     data: "php/api/index.php?type=utilisateur&action=pseudo_personnel"
+  });
+}
+
+if (
+  initVars.url.module === "administration" &&
+  initVars.url.type === "groupe" &&
+  initVars.url.action === "afficher_modification"
+) {
+  var id_groupe = new URL(window.location.href).searchParams.get("id");
+
+  $("input#pseudo_utilisateur").flexdatalist({
+    selectionRequired: true,
+    minLength: 0,
+    visibleProperties: "pseudo_utilisateur",
+    searchIn: "pseudo_utilisateur",
+    valueProperty: "id_utilisateur",
+    cache: false,
+    data: "php/api/index.php?type=groupe&action=utilisateurs&id=" + id_groupe
+  });
+
+  $("input#groupe_fils").flexdatalist({
+    selectionRequired: true,
+    minLength: 0,
+    visibleProperties: "nom_groupe",
+    searchIn: "nom_groupe",
+    valueProperty: "id_groupe",
+    cache: false,
+    data: "php/api/index.php?type=groupe&action=sous_groupes&id=" + id_groupe
   });
 }

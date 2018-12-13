@@ -14,8 +14,8 @@
             $semestres_actif = $type === 'semestre' ? 'active' : '';
 
             echo '            
-            <div class="container-fluid row justify-content-around mt-3 mt-md-0 administration">
-                <div class="col-lg-3 px-md-0 mb-4 container">
+            <div class="container-fluid row justify-content-around mt-3 mt-md-0 administration  ">
+                <div class="col-lg-3 px-md-0 mb-4 container d-none d-lg-block">
             
                     <div class="list-group">
                         <a href="index.php?module=administration&type=utilisateur&action=liste_utilisateurs">
@@ -67,6 +67,21 @@
             
                     </div>
                 </div>
+
+            <div class="mb-4 row justify-content-center container d-lg-none ">
+                <select class="form-control col-8 col-md-6">
+                    <option value=""></option>
+                    <option value=""></option>
+                    <option value=""></option>
+                    <option value=""></option>
+                    <option value=""></option>
+                    <option value=""></option>
+                    <option value=""></option>
+                    <option value=""></option>
+                </select>
+        
+            </div>
+
             
             <div class="col-lg-8 container content mt-2 mb-3 mt-md-0">
         ';

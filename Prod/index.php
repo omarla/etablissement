@@ -34,11 +34,13 @@
 	<link href="css/connexion.css" type="text/css" rel="stylesheet">
 	<link href="css/menu-interne.css" rel="stylesheet" type="text/css" >
 	<link href="css/administration.css" rel="stylesheet" type="text/css" >
-    
+    <link href="css/moodle/simple-sidebar.css" rel="stylesheet" type="text/css" />
+    <link href="css/moodle/styleMoodle.css" rel="stylesheet" type="text/css" /> 
+
 </head>
 <body>
-
     <?php
+    
         ob_start();
 
         $module = isset($_GET['module']) ? htmlspecialchars($_GET['module']) : '';
@@ -79,7 +81,7 @@
         }
 
         echo ob_get_clean();
-        
+      
     ?>
 
 	<script src="scripts/Common/jquery-3.3.1.min.js" ></script>

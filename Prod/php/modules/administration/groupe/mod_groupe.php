@@ -1,12 +1,12 @@
 <?php
-    require_once "php/verify.php";
+    require_once __DIR__ . "/../../../verify.php";
     require_once __DIR__ . "/cont_groupe.php";
 
     class ModGroupe
     {
         public function __construct()
         {
-            $action = isset($_GET['action']) ? $_GET['action'] : null;
+            $action = isset($_GET['action']) ? htmlspecialchars($_GET['action']) : null;
             $cont = new ContGroupe();
 
             switch ($action) {
@@ -43,8 +43,12 @@
                     $cont->retirerGroupe();
                 break;
 
+                case 'supprimer_groupe':
+                    $cont->supprimerGroupe();
+                break;
+
                 default:
-                    echo "Module Groupe inconnu";
+                    header("Location: index.php?module=error&title=Type invalide&message=".INVALID_TYPE_ERROR_MESSAGE);
             }
         }
     }

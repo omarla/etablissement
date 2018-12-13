@@ -1,9 +1,10 @@
 <?php
-    require_once "php/verify.php";
+    require_once __DIR__ . "/../../../verify.php";
+    require_once __DIR__ . "/../../../common/cont_generique.php";
     require_once __DIR__ . "/vue_groupe.php";
     require_once __DIR__ . "/modele_groupe.php";
 
-    class ContGroupe
+    class ContGroupe extends ContGenerique 
     {
         private $vue;
         private $modele;
@@ -25,8 +26,8 @@
 
         public function ajouterGroupe()
         {
-            $nom_groupe = isset($_POST['nom_groupe']) ? $_POST['nom_groupe'] : die('Nom groupe');
-            $nom_droits = isset($_POST['droits']) ? $_POST['droits'] : die('nom droits');
+            $nom_groupe = isset($_POST['nom_groupe']) ? htmlspecialchars($_POST['nom_groupe']) : $this->afficherErreur(NOT_ENOUGH_PARAM_TITLE, NOT_ENOUGH_PARAM_MESSAGE);
+            $nom_droits = isset($_POST['droits']) ? htmlspecialchars($_POST['droits']) : $this->afficherErreur(NOT_ENOUGH_PARAM_TITLE, NOT_ENOUGH_PARAM_MESSAGE);
 
             $this->modele->ajouterGroupe($nom_groupe, $nom_droits);
         
@@ -35,8 +36,8 @@
 
         public function ajouterSousGroupe()
         {
-            $id_groupe = isset($_GET['id_groupe']) ? $_GET['id_groupe'] : die('Id invalide');
-            $id_groupe_fils = isset($_POST['groupe_fils']) ? $_POST['groupe_fils'] : die('Groupe fils invalid');
+            $id_groupe = isset($_GET['id_groupe']) ? htmlspecialchars($_GET['id_groupe']) : $this->afficherErreur(NOT_ENOUGH_PARAM_TITLE, NOT_ENOUGH_PARAM_MESSAGE);
+            $id_groupe_fils = isset($_POST['groupe_fils']) ? htmlspecialchars($_POST['groupe_fils']) : $this->afficherErreur(NOT_ENOUGH_PARAM_TITLE, NOT_ENOUGH_PARAM_MESSAGE);
 
             $this->modele->ajouterSousGroupe($id_groupe_fils, $id_groupe);
 
@@ -45,8 +46,8 @@
 
         public function ajouterUtilisateur()
         {
-            $id_groupe = isset($_GET['id_groupe']) ? $_GET['id_groupe'] : die('Id invalide');
-            $pseudo_utilisateur = isset($_POST['pseudo_utilisateur']) ? $_POST['pseudo_utilisateur'] : die('Groupe fils invalid');
+            $id_groupe = isset($_GET['id_groupe']) ? htmlspecialchars($_GET['id_groupe']) : $this->afficherErreur(NOT_ENOUGH_PARAM_TITLE, NOT_ENOUGH_PARAM_MESSAGE);
+            $pseudo_utilisateur = isset($_POST['pseudo_utilisateur']) ?  htmlspecialchars($_POST['pseudo_utilisateur']) : $this->afficherErreur(NOT_ENOUGH_PARAM_TITLE, NOT_ENOUGH_PARAM_MESSAGE);
 
             $this->modele->ajouterUtilisateur($pseudo_utilisateur, $id_groupe);
 
@@ -56,7 +57,7 @@
 
         public function afficherModification()
         {
-            $id_groupe = isset($_GET['id']) ? $_GET['id'] : die('ID invalid');
+            $id_groupe = isset($_GET['id']) ? htmlspecialchars($_GET['id']) : $this->afficherErreur(NOT_ENOUGH_PARAM_TITLE, NOT_ENOUGH_PARAM_MESSAGE);
             
             $groupe = $this->modele->detailsGroupe($id_groupe);
 
@@ -65,9 +66,9 @@
 
         public function retirerUtilisateur()
         {
-            $id_utilisateur = isset($_GET['id_utilisateur']) ? $_GET['id_utilisateur'] : die("Aucun id utilisateur");
+            $id_utilisateur = isset($_GET['id_utilisateur']) ? htmlspecialchars($_GET['id_utilisateur']) : $this->afficherErreur(NOT_ENOUGH_PARAM_TITLE, NOT_ENOUGH_PARAM_MESSAGE);
             
-            $id_groupe = isset($_GET['id_groupe']) ? $_GET['id_groupe'] : die("Aucun groupe");
+            $id_groupe = isset($_GET['id_groupe']) ? htmlspecialchars($_GET['id_groupe']) : $this->afficherErreur(NOT_ENOUGH_PARAM_TITLE, NOT_ENOUGH_PARAM_MESSAGE);
 
             $this->modele->retirerUtilisateur($id_utilisateur, $id_groupe);
 
@@ -76,12 +77,20 @@
 
         public function retirerGroupe()
         {
-            $sous_groupe = isset($_GET['sous_groupe']) ? $_GET['sous_groupe'] : die("Aucun id sous_groupe");
+            $sous_groupe = isset($_GET['sous_groupe']) ? htmlspecialchars($_GET['sous_groupe']) : die("Aucun id sous_groupe");
             
-            $id_groupe = isset($_GET['id_groupe']) ? $_GET['id_groupe'] : die("Aucun groupe");
+            $id_groupe = isset($_GET['id_groupe']) ? htmlspecialchars($_GET['id_groupe']) : $this->afficherErreur(NOT_ENOUGH_PARAM_TITLE, NOT_ENOUGH_PARAM_MESSAGE);
 
             $this->modele->retirerSousGroupe($sous_groupe, $id_groupe);
 
             header('Location: index.php?module=administration&type=groupe&action=afficher_modification&id='.$id_groupe);
+        }
+
+        public function supprimerGroupe(){
+            $id_groupe = isset($_GET['id']) ? htmlspecialchars($_GET['id']) : $this->afficherErreur(NOT_ENOUGH_PARAM_TITLE, NOT_ENOUGH_PARAM_MESSAGE);
+
+            $this->modele->supprimerGroupe($id_groupe);
+
+            header('Location: index.php?module=administration&type=groupe&action=liste_groupes');
         }
     }

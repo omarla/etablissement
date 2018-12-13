@@ -23,11 +23,11 @@
                                                     group by utilisateur.id_utilisateur, personnel.id_personnel, enseignant.id_enseignant ';
         
 
-        private static $personalWorkQuery       = 'select annee, heures_travail from heures_travail where id_personnel = :id_personal order by annee';
+        private static $personalWorkQuery       = 'select date_debut::varchar || \' => \' || date_fin::varchar as annee, heures_travail from heures_travail where id_personnel = :id_personal order by annee';
     
-        private static $insertPersonalQuery     = 'insert into personnel values(default, ?)';
+        private static $insertPersonalQuery     = 'insert into personnel values(default, :id_utilisateur) returning id_personnel ';
     
-        private static $personalWorkUpdateQuery = 'call setWorkHours(:id_personnel, :heures_travail, :annee) ';
+        private static $personalWorkUpdateQuery = 'select setHeuresTravail(:id_personnel, :heures_travail, :debut, :fin) ';
 
 
         private static $deletePersonalQuery     = 'delete from heures_travail where id_personnel = :id_personnel ;
@@ -77,13 +77,14 @@
 
         public function modifierHeuresTravail($heures_travail)
         {
-            $annee =  self::getDBYear();
+            $annee = explode(" => ", self::getDBYear());
             
             $stmt = self::$db->prepare(self::$personalWorkUpdateQuery);
             
             $stmt->bindValue(":heures_travail", $heures_travail);
             $stmt->bindValue(":id_personnel", $this->id_personnel);
-            $stmt->bindValue(":annee", $annee);
+            $stmt->bindValue(":debut", $annee[0]);
+            $stmt->bindValue(":fin", $annee[1]);
 
             $stmt->execute();
         }
@@ -101,13 +102,15 @@
 
 
 
-        public static function ajouterPersonnel($utilisateur)
+        public static function ajouterPersonnel($id_utilisateur)
         {
             $stmtPersonnel = self::$db->prepare(self::$insertPersonalQuery);
 
-            $stmtPersonnel->bindValue(1, $utilisateur['id_utilisateur']);
+            $stmtPersonnel->bindValue(':id_utilisateur', $id_utilisateur);
 
             $stmtPersonnel->execute();
+
+            return $stmtPersonnel->fetch(PDO::FETCH_ASSOC)['id_personnel'];
         }
 
 

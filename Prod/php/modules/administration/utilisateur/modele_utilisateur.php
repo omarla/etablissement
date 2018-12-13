@@ -125,10 +125,9 @@
             try{
                 $utilisateur = new Utilisateur('', $pseudo);
             
-                Personnel::ajouterPersonnel($utilisateur->getIdUtilisateur());
+                $id_personnel = Personnel::ajouterPersonnel($utilisateur->getIdUtilisateur());
                 
                 if ($estEnseignant) {
-                    $id_personnel = self::getLastInsertId();
                     Enseignant::ajouterEnseignant($id_personnel);
                 }
     

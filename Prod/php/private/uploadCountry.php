@@ -21,7 +21,7 @@
                 $stmt->bindParam(':nom_pays', $nom);
 
                 while (false !== ($line = fgets($file))) {
-                    $parts = explode($separator, utf8_decode($line));
+                    $parts = explode($separator, utf8_encode($line));
                     
                     $code_pays = str_replace('"', "", $parts[3]);
                     

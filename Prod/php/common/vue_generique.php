@@ -47,13 +47,11 @@
         {
             $html = "";
 
-
-
             foreach ($tableau as $ligne) {
                 $html .= "<tr>";
                 
                 foreach ($cles as $cle) {
-                    if ($ligne[$cle] != null) {
+                    if ($ligne[$cle] !== null) {
                         $html .= "<td>${ligne[$cle]}</td>";
                     } else {
                         $html .= "<td>-</td>";
@@ -145,7 +143,7 @@
                 }
                 
                 foreach ($keys as $key) {
-                    if ($row[$key] != null) {
+                    if ($row[$key] !== null) {
                         $htmlBody .= "<td>${row[$key]}</td>";
                     } else {
                         $htmlBody .= "<td>-</td>";
