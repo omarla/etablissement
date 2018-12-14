@@ -3,6 +3,9 @@
     require_once __DIR__ . "/droits/mod_droits.php";
     require_once __DIR__ . "/groupe/mod_groupe.php";
     require_once __DIR__ . "/semestre/mod_semestre.php";
+    require_once __DIR__ . "/module/mod_module.php";
+    require_once __DIR__ . "/etudiant/mod_etudiant.php";
+
     require_once __DIR__ . "/vue_administration.php";
     class ModAdministration
     {
@@ -27,6 +30,14 @@
 
                 case 'semestre':
                     $mod = new ModSemestre();
+                break;
+               
+                case 'etudiant':
+                    $mod = new ModEtudiant();
+                break;
+
+                case 'module':
+                    $mod = new ModModule();
                 break;
                 
                 default:

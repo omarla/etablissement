@@ -12,6 +12,7 @@
             $groupes_actif = $type === 'groupe' ? 'active' : '';
             $droits_actif = $type === 'droits' ? 'active' : '';
             $semestres_actif = $type === 'semestre' ? 'active' : '';
+            $modules_actif = $type === 'module' ? 'active' : '';
 
             echo '            
             <div class="container-fluid row justify-content-around mt-3 mt-md-0 administration  ">
@@ -29,8 +30,8 @@
                             </button>
                         </a>
             
-                        <a href="index.php?module=administration&type=etudiant&action=liste_etudiants '. $etudiants_actif .'">
-                            <button type="button" class=" list-group-item list-group-item-action">
+                        <a href="index.php?module=administration&type=etudiant&action=liste_etudiants ">
+                            <button type="button" class=" list-group-item list-group-item-action '. $etudiants_actif .'">
                                 Etudiants
                             </button>
                         </a>
@@ -49,7 +50,7 @@
                         </a>
 
                         <a href="index.php?module=administration&type=module&action=liste_modules">
-                            <button type="button" class=" list-group-item list-group-item-action">
+                            <button type="button" class=" list-group-item list-group-item-action  '.$modules_actif.'">
                                 Modules
                             </button>
                         </a>

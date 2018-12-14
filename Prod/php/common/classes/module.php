@@ -1,6 +1,6 @@
 <?php
 
-    require_once __DIR__ . "/../verify.php";
+    require_once __DIR__ . "/../../verify.php";
     require_once __DIR__ . "/../Database.php";
     
     class Module extends Database
@@ -122,15 +122,12 @@
         }
 
 
-        public static function getModules()
+        public static function listeModules()
         {
             $stmt = self::$db->prepare(self::$modulesQuery);
 
+            $stmt->execute();
 
-            try {
-                $stmt->execute();
-                return $stmt->fetchAll(PDO::FETCH_ASSOC);
-            } catch (PDOException $e) {
-            }
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
     }

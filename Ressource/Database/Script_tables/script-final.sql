@@ -215,7 +215,6 @@ CREATE TABLE public.depot_exercice(
 	id_depot_exercice             SERIAL NOT NULL ,
 	date_debut_depot_exercice     DATE DEFAULT NOW()  ,
 	date_fermeture_depot_exercice DATE  NOT NULL ,
-	lien_depot_exercice           VARCHAR (2000)   ,
 	coefficient_depot             FLOAT   ,
 	id_support                    INT   ,
 	CONSTRAINT prk_constraint_depot_exercice PRIMARY KEY (id_depot_exercice)
