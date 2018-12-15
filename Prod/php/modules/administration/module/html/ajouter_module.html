@@ -4,6 +4,7 @@
   action="index.php?module=administration&type=module&action=ajouter_groupe"
 >
   <h4 class=" text-center mt-3 mb-1 underline">Ajout de semestre</h4>
+
   <div class="form-row">
     <div class="form-group col-md-6">
       <label for="reference_module">Référence</label>
@@ -47,18 +48,17 @@
       <label for="semestre_module">Semestre</label>
       <select
         class="form-control"
-        id="semestre_module"
-        name="semestre_module"
+        id="semestre"
+        name="semestre"
+        class="semestre_autofill"
         required
       >
-        <option value="S1">S1</option>
-        <option value="S2">S2</option>
       </select>
     </div>
   </div>
 
   <div class="form-row">
-    <div class="form-group col-md-4 ">
+    <div class="form-group col-md-6 ">
       <label for="heures_cm">Heures CM</label>
       <input
         type="number"
@@ -71,7 +71,7 @@
       />
     </div>
 
-    <div class="form-group col-md-4 ">
+    <div class="form-group col-md-6 ">
       <label for="heures_td">Heures TD</label>
       <input
         type="number"
@@ -83,8 +83,10 @@
         required
       />
     </div>
+  </div>
 
-    <div class="form-group col-md-4 ">
+  <div class="form-row">
+    <div class="form-group col-md-6 ">
       <label for="heures_tp">Heures TP</label>
       <input
         type="number"
@@ -93,6 +95,18 @@
         id="heures_tp"
         name="heures_tp"
         placeholder="20"
+        required
+      />
+    </div>
+    <div class="form-group col-md-6 ">
+      <label for="couleur">Couleur</label>
+      <input
+        type="color"
+        class="form-control"
+        min="0"
+        id="couleur"
+        name="couleur"
+        placeholder="Couleur en edt"
         required
       />
     </div>

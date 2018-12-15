@@ -6,22 +6,27 @@ require_once __DIR__ . "/../common/Fonctions.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     require_once __DIR__ . "/../common/Database.php";
-    require_once __DIR__ . "/utilisateur/mod_utilisateur.php";
-    require_once __DIR__ . "/groupe/mod_groupe.php";
+    require_once __DIR__ . "/utilisateur/mod_utilisateur_api.php";
+    require_once __DIR__ . "/groupe/mod_groupe_api.php";
+    require_once __DIR__ . "/semestre/mod_semestre_api.php";
 
     Database::initConnexion();
 
-    $type = isset($_GET['type']) ? $_GET['type'] : die('Erreur type');
+    $type = isset($_GET['type']) ? htmlspecialchars($_GET['type']) : die('Erreur type');
 
     $mod = null;
 
     switch ($type) {
         case 'utilisateur':
-            $mod = new ModUtilisateur();
+            $mod = new ModUtilisateurAPI();
         break;
 
         case 'groupe':
-            $mod = new ModGroupe();
+            $mod = new ModGroupeAPI();
+        break;
+
+        case 'semestre':
+            $mod = new ModSemestreAPI();
         break;
     }
 } else {

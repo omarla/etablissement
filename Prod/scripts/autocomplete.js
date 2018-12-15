@@ -85,3 +85,8 @@ if (
     data: "php/api/index.php?type=groupe&action=sous_groupes&id=" + id_groupe
   });
 }
+
+$.get("php/api/index.php?type=semestre&action=liste_semestres", function(data) {
+  result = JSON.parse(data);
+  result.forEach(function(element) {});
+});

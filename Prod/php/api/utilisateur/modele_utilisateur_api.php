@@ -1,7 +1,7 @@
 <?php
     require_once __DIR__ . "/../verify.php";
 
-    class ModeleUtilisateur extends Database
+    class ModeleUtilisateurAPI extends Database
     {
 
         public function __construct()

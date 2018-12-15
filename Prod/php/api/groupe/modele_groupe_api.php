@@ -1,7 +1,7 @@
 <?php
     require_once __DIR__ . "/../verify.php";
 
-    class ModeleGroupe extends Database
+    class ModeleGroupeAPI extends Database
     {
         private $id_groupe;
 

@@ -14,6 +14,20 @@
 
 
         public function liste_modules(){
-            return Module::listeModules();
+            try{
+                return Module::listeModules();
+            }catch(PDOException $e){
+                echo $e->getMessage();
+            }
         }
+
+        public function ajouter_module($ref, $nom, $coef, $heures_cm, $heures_td, $heures_tp, $couleur, $semestre){
+            try{
+                Module::ajouterModule($ref, $nom, $coef, $heures_cm , $heures_td, $heures_tp, $couleur, $semestre);
+            }catch(PDOException $e){
+                echo $e->getMessage();
+            }
+
+        }
+
     }
