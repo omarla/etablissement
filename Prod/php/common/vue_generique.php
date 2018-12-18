@@ -51,7 +51,10 @@
                 $html .= "<tr>";
                 
                 foreach ($cles as $cle) {
-                    if ($ligne[$cle] !== null) {
+                    if(is_bool($ligne[$cle])){
+                        $html .= "<td>" . $this->showCond($ligne[$cle]) . "</td>";
+                    }
+                    else if ($ligne[$cle] !== null) {
                         $html .= "<td>${ligne[$cle]}</td>";
                     } else {
                         $html .= "<td>-</td>";
@@ -143,7 +146,10 @@
                 }
                 
                 foreach ($keys as $key) {
-                    if ($row[$key] !== null) {
+                    if(is_bool($row[$key])){
+                        $html .= "<td>" . $this->showCond($row[$key]) . "</td>";
+                    }
+                    else if ($row[$key] !== null) {
                         $htmlBody .= "<td>${row[$key]}</td>";
                     } else {
                         $htmlBody .= "<td>-</td>";

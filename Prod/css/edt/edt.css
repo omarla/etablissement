@@ -1,0 +1,61 @@
+.edt .edt-week-switcher {
+  width: 30px;
+  padding-top: 1px;
+  background-color: #e9e4e8;
+  border: 1px solid black;
+}
+
+.edt .edt-week-container {
+  font-size: 20px;
+  padding-top: 5px;
+  height: 40px;
+}
+
+.edt .edt-week-text {
+  background-color: #e9e4e8;
+  padding-top: 2px;
+  border: 1px solid black;
+}
+.edt .edt-week-name {
+  font-family: "Satisfy";
+  font-size: 30px;
+  font-weight: bold;
+  padding-top: 7px;
+}
+
+.edt .edt-body table {
+  border: 0px;
+}
+
+.edt .edt-body .col-edt {
+  font-family: "Dancing Script", cursive;
+  font-size: 25px;
+  text-align: center;
+  -webkit-box-shadow: 5px -2px 37px 5px rgba(0, 0, 0, 0.78);
+  -moz-box-shadow: 5px -2px 37px 5px rgba(0, 0, 0, 0.78);
+  box-shadow: 5px -2px 37px 5px rgba(0, 0, 0, 0.78);
+}
+.edt .edt-body .col-lundi {
+  background-color: #00a652;
+}
+
+.edt .edt-body .col-mardi {
+  background-color: #f8b71d;
+}
+
+.edt .edt-body .col-mercredi {
+  background-color: #f36525;
+}
+
+.edt .edt-body .col-jeudi {
+  background-color: #ee1b24;
+}
+
+.edt .edt-body .col-vendredi {
+  background-color: #f3115d;
+}
+
+.edt .body-tr {
+  height: 50px;
+  text-align: center;
+}

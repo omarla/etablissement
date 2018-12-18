@@ -86,7 +86,53 @@ if (
   });
 }
 
+if (
+  initVars.url.module === "administration" &&
+  initVars.url.type === "module" &&
+  initVars.url.action === "afficher_module"
+) {
+  var reference = new URL(window.location.href).searchParams.get("id");
+
+  $("input#pseudo_enseignant").flexdatalist({
+    selectionRequired: true,
+    minLength: 0,
+    visibleProperties: "pseudo_utilisateur",
+    searchIn: ["pseudo_utilisateur", "nom_utilisateur", "prenom_utilisateur"],
+    valueProperty: "id_enseignant",
+    cache: false,
+    data:
+      "php/api/index.php?type=utilisateur&action=enseignants_module&module=" +
+      reference
+  });
+
+  $("input#groupe_fils").flexdatalist({
+    selectionRequired: true,
+    minLength: 0,
+    visibleProperties: "nom_groupe",
+    searchIn: "nom_groupe",
+    valueProperty: "id_groupe",
+    cache: false,
+    data: "php/api/index.php?type=groupe&action=sous_groupes&id=" + id_groupe
+  });
+}
+
 $.get("php/api/index.php?type=semestre&action=liste_semestres", function(data) {
   result = JSON.parse(data);
-  result.forEach(function(element) {});
+  $(".semestre_select").each(function() {
+    $(this).html("");
+  });
+
+  result.forEach(function(semestre) {
+    $(".semestre_select").each(function() {
+      let innerHTML =
+        $(this).html() +
+        "<option value='" +
+        semestre.ref +
+        "'>" +
+        semestre.nom +
+        "</option>";
+
+      $(this).html(innerHTML);
+    });
+  });
 });

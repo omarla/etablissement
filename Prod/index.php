@@ -22,6 +22,9 @@
 	<title>Etablissement</title>
 	<meta charset="utf-8">
 
+    <link href="https://fonts.googleapis.com/css?family=Dancing+Script" rel="stylesheet">
+
+
     <link href="css/Common/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="./frameworks/font-awesome/css/all.css" rel="stylesheet" type="text/css">
     <link href="css/Common/toastr.css" rel="stylesheet" type="text/css">
@@ -36,6 +39,7 @@
 	<link href="css/administration.css" rel="stylesheet" type="text/css" >
     <link href="css/moodle/simple-sidebar.css" rel="stylesheet" type="text/css" />
     <link href="css/moodle/styleMoodle.css" rel="stylesheet" type="text/css" /> 
+    <link href="css/edt/edt.css" rel="stylesheet" type="text/css" /> 
 
 </head>
 <body>

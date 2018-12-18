@@ -1,0 +1,50 @@
+
+
+*************************************************
+Date      :   15122018 20:13:17
+Message   :   Call to a member function getDetailsModule() on null
+File      :   /home/24IUT/Desktop/Projet_Web/etablissement/Prod/php/modules/administration/module/cont_module.php
+Line      :   43
+*************************************************
+
+
+
+
+*************************************************
+Date      :   15122018 20:13:38
+Message   :   Call to a member function getDetailsModule() on null
+File      :   /home/24IUT/Desktop/Projet_Web/etablissement/Prod/php/modules/administration/module/cont_module.php
+Line      :   43
+*************************************************
+
+
+
+
+*************************************************
+Date      :   15122018 20:32:27
+Message   :   Call to undefined method Module::modifier_module()
+File      :   /home/24IUT/Desktop/Projet_Web/etablissement/Prod/php/modules/administration/module/modele_module.php
+Line      :   49
+*************************************************
+
+
+
+
+*************************************************
+Date      :   15122018 22:58:37
+Message   :   Call to a member function getDetailsModule() on null
+File      :   /home/24IUT/Desktop/Projet_Web/etablissement/Prod/php/modules/administration/module/cont_module.php
+Line      :   43
+*************************************************
+
+
+
+
+*************************************************
+Date      :   15122018 23:00:13
+Message   :   Call to a member function getDetailsModule() on null
+File      :   /home/24IUT/Desktop/Projet_Web/etablissement/Prod/php/modules/administration/module/cont_module.php
+Line      :   43
+*************************************************
+
+

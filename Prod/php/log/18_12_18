@@ -1,0 +1,10 @@
+
+
+*************************************************
+Date      :   18122018 9:35:31
+Message   :   Call to undefined method ContEtudiant::modifier_etudiant()
+File      :   /home/24IUT/Desktop/Projet_Web/etablissement/Prod/php/modules/administration/etudiant/mod_etudiant.php
+Line      :   26
+*************************************************
+
+

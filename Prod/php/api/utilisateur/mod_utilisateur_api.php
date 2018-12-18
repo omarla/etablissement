@@ -23,6 +23,11 @@
                     $modele->getPays();
                 break;
 
+                case 'enseignants_module':
+                    $ref_module = isset($_GET['module']) ? htmlspecialchars($_GET['module']) : die('pas de module');
+                    $modele->getEnseignantsModule($ref_module);
+                break;
+
 
                 default:
                     Response::send_error(HTTP_BAD_REQUEST, "Ce type de requête est inconnu");

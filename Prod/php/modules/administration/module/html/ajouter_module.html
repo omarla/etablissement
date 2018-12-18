@@ -1,7 +1,7 @@
 <form
   autocomplete="off"
   method="post"
-  action="index.php?module=administration&type=module&action=ajouter_groupe"
+  action="index.php?module=administration&type=module&action=ajouter_module"
 >
   <h4 class=" text-center mt-3 mb-1 underline">Ajout de semestre</h4>
 
@@ -13,7 +13,7 @@
         class="form-control"
         id="reference_module"
         name="reference_module"
-        placeholder="S1"
+        placeholder="M1235"
         required
       />
     </div>
@@ -24,7 +24,7 @@
         class="form-control"
         id="nom_module"
         name="nom_module"
-        placeholder="Semestre 1"
+        placeholder="Base de données"
         required
       />
     </div>
@@ -37,6 +37,7 @@
         type="number"
         class="form-control"
         min="0"
+        step="0.1"
         id="coefficient_module"
         name="coefficient_module"
         placeholder="1.5"
@@ -47,10 +48,9 @@
     <div class="form-group col-md-6">
       <label for="semestre_module">Semestre</label>
       <select
-        class="form-control"
+        class="form-control semestre_select"
         id="semestre"
         name="semestre"
-        class="semestre_autofill"
         required
       >
       </select>

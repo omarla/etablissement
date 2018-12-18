@@ -60,23 +60,20 @@
     function ExceptionHandler($e){
         $date = date('y_m_d');
         $handle = fopen(__DIR__."./../log/" . $date, "a");
-        var_dump($e);
         logToFile($handle, $e);
-        throw $e;
+        echo $e->getMessage();
     }
 
     function logToFile($file, $message){
         if($file){
-            var_dump($e);
-            // fputs($file, "\n\n");
-            // fputs($file, "*************************************************\n");
-            // fputs($file, "Date      :   " . date('dmY G:i:s') . "\n");
-            // fputs($file, "Titre     :   " . $titre . "\n");
-            // fputs($file, "Message   :   " . $message['message'] . "\n");
-            // fputs($file, "File      :   " . $message['file'] . "\n");
-            // fputs($file, "Line      :   " . $message['line'] . "\n");
-            // fputs($file, "*************************************************\n");
-            // fputs($file, "\n\n");
+            fputs($file, "\n\n");
+            fputs($file, "*************************************************\n");
+            fputs($file, "Date      :   " . date('dmY G:i:s') . "\n");
+            fputs($file, "Message   :   " . $message->getMessage() . "\n");
+            fputs($file, "File      :   " . $message->getFile() . "\n");
+            fputs($file, "Line      :   " . $message->getLine() . "\n");
+            fputs($file, "*************************************************\n");
+            fputs($file, "\n\n");
         }
         fclose($file);
     }

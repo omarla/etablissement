@@ -1,5 +1,6 @@
 <?php
     require_once __DIR__ . "/../verify.php";
+    require_once __DIR__ . "/../../common/classes/module.php";
 
     class ModeleUtilisateurAPI extends Database
     {
@@ -23,7 +24,6 @@
     
                 Response::sendHttpBodyAndExit($result);
             } catch (PDOException $e) {
-                echo $e->getMessage();
                 Response::send_error(HTTP_BAD_REQUEST, 'Erreur lors de la récupération des pseudos');
             }
         }
@@ -66,4 +66,19 @@
                 Response::send_error(HTTP_BAD_REQUEST, 'Erreur lors de la récupération des pays');
             }
         }
+
+
+        public function getEnseignantsModule($ref_module){
+            try{
+                $module = new Module($ref_module);
+                
+                $result = $module->getEnseignantsAAjouter();
+
+                Response::sendHttpBodyAndExit($result);
+            }catch(PDOException $e){
+                Response::send_error(HTTP_BAD_REQUEST, 'Erreur lors de la récupération de la liste des enseignants');
+            }catch(ElementIntrouvable $e){
+                Response::send_error(HTTP_BAD_REQUEST, "Ce module n'éxiste pas");
+            }
+        } 
     }
