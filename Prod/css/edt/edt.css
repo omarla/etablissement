@@ -25,12 +25,24 @@
 
 .edt .edt-body table {
   border: 0px;
+  font-size: 15px;
 }
+
+.edt .edt-body table td {
+  border-left:2px solid rgb(15, 13, 13);
+  font-size: 15px;
+}
+
+.edt .edt-body .newHour td{
+  border-top:2px solid rgb(15, 13, 13);
+}
+
 
 .edt .edt-body .col-edt {
   font-family: "Dancing Script", cursive;
-  font-size: 25px;
   text-align: center;
+  width:200px;
+  height: 40px;
   -webkit-box-shadow: 5px -2px 37px 5px rgba(0, 0, 0, 0.78);
   -moz-box-shadow: 5px -2px 37px 5px rgba(0, 0, 0, 0.78);
   box-shadow: 5px -2px 37px 5px rgba(0, 0, 0, 0.78);
@@ -55,7 +67,9 @@
   background-color: #f3115d;
 }
 
-.edt .body-tr {
-  height: 50px;
+.edt .body-tr td {
+  height: 10px;
+  border-bottom:1px solid black;
+  font-size:10px;
   text-align: center;
 }

@@ -22,10 +22,10 @@
         }
 
 
-        public function ajouter_etudiant($num)
+        public function ajouter_etudiant($num, $id_utilisateur)
         {
             try {
-                    Etudiant::ajouter_semestre($num);
+                Etudiant::ajouter_etudiant($num, $id_utilisateur);
             } catch (PDOException $e) {
                 echo $e->getMessage();
             }

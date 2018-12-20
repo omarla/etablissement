@@ -1,6 +1,6 @@
 <?php
-  require_once "php/verify.php";
-  require_once "php/common/Database.php";
+  require_once __DIR__ . "/../../verify.php";
+  require_once __DIR__ . "/../Database.php";
   
   class Etudiant extends Database
   {
@@ -16,7 +16,7 @@
                                                 left join semestre using(ref_semestre) 
                                                 group by id_utilisateur, num_etudiant;";
 
-      private static $studentYears          = "select moyenne, ref_semestre, annee from etudie_en where id_etudiant = :id_etudiant";
+      private static $studentYears          = "select moyenne, ref_semestre, date_debut, date_fin  from etudie_en where num_etudiant = :num";
 
       private static $insertEtudiantQuery   = "insert into etudiant values(:num, :id_utilisateur);";
 
@@ -24,26 +24,30 @@
 
       private static $updateEtudiantQuery   = "update etudie_en set ref_semestre = :ref where num_etudiant= :num;";
 
+
+      private static $possibleStudentsQuery = "select id_utilisateur, pseudo_utilisateur from utilisateur 
+                                                where id_utilisateur not in (select id_utilisateur from etudiant)"; 
+      
       private $num_etudiant;
 
       private $informations_etudiant;
     
       public function __construct($num_etudiant)
       {
-      	  $stmt = self::$db->prepare(self::$num_etudiantQuery);
-      	  $stmt->bindValue(":num", $num_etudiant);
-      	  $stmt->execute();
-      	  $result=$stmt->fetch();
-      	  if($result!=null){
-          	$this->num_etudiant = $num_etudiant;
-      	  }
-      	  else{
-      	  	throw new Exception("Etudiant inexistant !");
-      	  }
+          $stmt = self::$db->prepare(self::$etudiantQuery);
+          $stmt->bindValue(":num", $num_etudiant);
+          $stmt->execute();
+          $result=$stmt->fetch();
+          if($result!=null){
+            $this->num_etudiant = $num_etudiant;
+          }
+          else{
+            throw new Exception("Etudiant inexistant !");
+          }
       }
 
       public function liste_etudiants() {
-      	$stmt = self::$db->prepare(self::$allStudentsQuery);
+        $stmt = self::$db->prepare(self::$allStudentsQuery);
         
           $stmt->execute();
 
@@ -54,7 +58,7 @@
       {
           $stmt = self::$db->prepare(self::$insertEtudiantQuery);
 
-          $stmt->bindValue(':num_etudiant', $num);
+          $stmt->bindValue(':num', $num);
 
           $stmt->bindValue(':id_utilisateur', $id_utilisateur);
 
@@ -64,13 +68,13 @@
        public function detailsEtudiant()
       {
           if (!$this->informations_etudiant) {
-              $stmt = self::$db->prepare(self::$etudiantQuery);
+              $stmt = self::$db->prepare(self::$studentYears);
 
               $stmt->bindValue(":num", $this->num_etudiant);
   
               $stmt->execute();
 
-              $this->informations_etudiant = $stmt->fetch(PDO::FETCH_ASSOC);
+              $this->informations_etudiant = $stmt->fetchAll(PDO::FETCH_ASSOC);
           }
 
           return $this->informations_etudiant;
@@ -80,19 +84,27 @@
       public function supprimerEtudiant() {
           $stmt = self::$db->prepare(self::$deleteEtudiantQuery);
           
-          $stmt->bindValue(':num', $this->num);
+          $stmt->bindValue(':num', $this->num_etudiant);
           
           $stmt->execute();
       }
 
       public function modifierEtudiantSemestre($semestre)
       {
-        $stmt = self::$db->prepare(self::$updateEtudiantQuery);
+          $stmt = self::$db->prepare(self::$updateEtudiantQuery);
 
           $stmt->bindValue(":num", $this->num_etudiant);
           $stmt->bindValue(":ref", $this->semestre);
       
           $stmt->execute();
+      }
+
+      public function UtilisateursPossible(){
+          $stmt = self::$db->prepare(self::$possibleStudentsQuery);
+    
+          $stmt->execute();
+
+          return $stmt->fetchAll(PDO::FETCH_ASSOC);
       }
 
   }

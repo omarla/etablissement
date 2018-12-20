@@ -15,6 +15,10 @@
                     $modele->getPseudoPersonnels();
                 break;
 
+                case 'pseudo_etudiant':
+                    $modele->getPseudoEtudiants();
+                break;
+
                 case 'ville':
                     $modele->getVille();
                 break;

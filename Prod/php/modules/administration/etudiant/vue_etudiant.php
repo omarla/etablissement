@@ -17,28 +17,39 @@
             $this->afficherTableau(
                 $liste_etudiants,
                 array('num_etudiant', 'nom_utilisateur', 'prenom_utilisateur', 'points_ets'),
-                'index.php?module=administration&type=etudiant&action=modifier_etudiant&id=',
+                'index.php?module=administration&type=etudiant&action=afficher_etudiant&num=',
                 'num_etudiant',
                 array('No étudiant', 'Nom', 'Prénom', 'Points ets')
             );
 
+            require_once __DIR__ . "/html/ajouter_etudiant.html";
         }
 
-        public function afficher_etudiant($etudiant, $annee_semestre, $etudiants_semestre, $annee_courante)
+        public function afficher_etudiant($detailsEtudiant)
         {
-            echo '<fieldset class="px-3"><legend align="center" class="col-auto px-0">Détails de l étudiant</legend>';
-            
-            $this->afficherTableauSuppression(
-                $etudiants_semestre,
-                array('annee', 'num_etudiant', 'nom_utilisateur', 'prenom_utilisateur', 'moyenne'),
-                'num_etudiant',
-                '',
-                array('annee', 'numéro', 'nom', 'prenom', 'moyenne'),
-                function ($etudiant_semestre) {
-                    return $etudiant_semestre != null && $etudiant_semestre['annee'] == $annee_courante;
-                }
+            $num = htmlspecialchars($_GET['num']);
+            echo "<h2 class='text-center underline'> Détails de l'étudiant $num</h2>";
+
+            $this->afficherTableau(
+                $detailsEtudiant,
+                array('moyenne', 'ref_semestre', 'date_debut', 'date_fin')
             );
 
-            echo '</fieldset>';
+            echo "<h2 class='text-center underline'> Modification du semestre </h2>";
+
+            echo '
+            <form autocomplete="off" method="post" action="index.php?module=administration&type=etudiant&action=modifier_etudiant&id='.$num.'">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="nom_semestre">Nom</label>
+                        <input type="text" class="form-control" id="nom_semestre" name="nom_semestre" placeholder="Semestre 1"
+                            required value = "'.$detailsEtudiant['ref_semestre'].'"/>
+                    </div>
+                </div>
+                
+                <div class="container-fluid row justify-content-center">
+                    <button type="submit" class="btn btn-outline-primary mb-2">Modifier</button>
+                </div>
+            </form>';
         }
     }

@@ -8,3 +8,73 @@ Line      :   26
 *************************************************
 
 
+
+
+*************************************************
+Date      :   18122018 10:16:42
+Message   :   Class 'Utilisateur' not found
+File      :   /home/24IUT/Desktop/Projet_Web/etablissement/Prod/php/api/utilisateur/modele_utilisateur_api.php
+Line      :   88
+*************************************************
+
+
+
+
+*************************************************
+Date      :   18122018 10:29:17
+Message   :   Call to undefined method Etudiant::ajouter_semestre()
+File      :   /home/24IUT/Desktop/Projet_Web/etablissement/Prod/php/modules/administration/etudiant/modele_etudiant.php
+Line      :   28
+*************************************************
+
+
+
+
+*************************************************
+Date      :   18122018 10:30:28
+Message   :   Too few arguments to function Etudiant::ajouter_etudiant(), 1 passed in /home/24IUT/Desktop/Projet_Web/etablissement/Prod/php/modules/administration/etudiant/modele_etudiant.php on line 28 and exactly 2 expected
+File      :   /home/24IUT/Desktop/Projet_Web/etablissement/Prod/php/common/classes/etudiant.php
+Line      :   57
+*************************************************
+
+
+
+
+*************************************************
+Date      :   18122018 11:24:27
+Message   :   Class 'VueMenuMoodle' not found
+File      :   /home/24IUT/Desktop/Projet_Web/etablissement/Prod/php/composants/menu_moodle/cont_menu_moodle.php
+Line      :   14
+*************************************************
+
+
+
+
+*************************************************
+Date      :   18122018 11:25:13
+Message   :   Class 'VueMenuMoodle' not found
+File      :   /home/24IUT/Desktop/Projet_Web/etablissement/Prod/php/composants/menu_moodle/cont_menu_moodle.php
+Line      :   14
+*************************************************
+
+
+
+
+*************************************************
+Date      :   18122018 11:25:44
+Message   :   Class 'ModeleMenuInterne' not found
+File      :   /home/24IUT/Desktop/Projet_Web/etablissement/Prod/php/composants/menu_interne/cont_menu_interne.php
+Line      :   15
+*************************************************
+
+
+
+
+*************************************************
+Date      :   18122018 11:25:46
+Message   :   Class 'ModeleMenuInterne' not found
+File      :   /home/24IUT/Desktop/Projet_Web/etablissement/Prod/php/composants/menu_interne/cont_menu_interne.php
+Line      :   15
+*************************************************
+
+

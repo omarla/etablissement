@@ -1,0 +1,53 @@
+<!-- Page Content -->
+<div id="page-content-wrapper" class=" px-0 ">
+    <div class="container-fluid  px-0 ">
+        <h1 class="my-3 text-center">Ouvrir un dépôt</h1>
+        <div class="container-fluid row py-2 justify-content-center  mx-0">
+            <form class="col-11 col-lg-10 border border-primary rounded">
+                <h4 class="mt-2  text-center">Choisissez le mail du groupe !</h4>
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Mail du groupe</label>
+                    <select class="form-control" id="exampleFormControlSelect1">
+                        <option>TD1</option>
+                        <option>TD2</option>
+                        <option>TP1</option>
+                        <option>TP2</option>
+                        <option>etud-info</option>
+                    </select>
+                </div>
+            </form>
+
+            <div class="col-11 col-lg-10 mt-4 border border-primary rounded">
+                <h4 class="mt-2  text-center">Déposez ici !</h4>
+                <div class="custom-file my-3">
+                    <input type="file" class="custom-file-input" id="customFile">
+                    <label class="custom-file-label" for="customFile">Choisir un fichier</label>
+                </div>
+            </div>
+
+            <div class="col-11 col-lg-10 my-3 row container-fluid">
+
+                <div class="form-group row col-lg-6">
+                    <label for="date_ouverture" class="">Date d'ouverture</label>
+                    <input class="form-control col-12 " type="date" value="2018-12-13" id="date_ouverture">
+                </div>
+
+                <div class="form-group row col-lg-5 offset-lg-1 ">
+                    <label for="coefficient" class="">Coefficient</label>
+                    <select class="form-control col-12 " id="coefficient">
+                        <option>0</option>
+                        <option>1</option>
+                        <option>1.5</option>
+                        <option>2</option>
+                        <option>2.5</option>
+                    </select>
+                </div>
+
+            </div>
+            <div class="row col-3 col-sm-4 col-md-6 col-lg-8">
+                <button type="button" class="btn btn-success mx-auto">Enregistrer</button>
+            </div>
+        </div>
+
+    </div>
+</div>

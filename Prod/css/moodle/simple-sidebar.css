@@ -4,17 +4,12 @@
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-simple-sidebar/blob/master/LICENSE)
  */
 
-body {
-  overflow-x: hidden;
-}
-
 #wrapper {
   padding-left: 0;
   -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
   -o-transition: all 0.5s ease;
   transition: all 0.5s ease;
-
 }
 
 #wrapper.toggled {
@@ -35,8 +30,13 @@ body {
   -o-transition: all 0.5s ease;
   transition: all 0.5s ease;
 
-   background: rgb(2,0,36);
-background: linear-gradient(147deg, rgba(2,0,36,1) 0%, rgba(10,74,120,1) 35%, rgba(0,255,113,1) 100%); 
+  background: rgb(2, 0, 36);
+  background: linear-gradient(
+    147deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(10, 74, 120, 1) 35%,
+    rgba(0, 255, 113, 1) 100%
+  );
 }
 
 #wrapper.toggled #sidebar-wrapper {
@@ -47,7 +47,6 @@ background: linear-gradient(147deg, rgba(2,0,36,1) 0%, rgba(10,74,120,1) 35%, rg
   width: 100%;
   position: absolute;
   padding: 15px;
-  
 }
 
 #wrapper.toggled #page-content-wrapper {
@@ -55,56 +54,56 @@ background: linear-gradient(147deg, rgba(2,0,36,1) 0%, rgba(10,74,120,1) 35%, rg
   margin-right: -250px;
 }
 
-
 /* Sidebar Styles */
 
-.sidebar-nav {
+.moodle .sidebar-nav {
   position: absolute;
   top: 0;
   width: 250px;
   margin: 0;
   padding: 0;
   list-style: none;
-
 }
 
-.sidebar-nav li {
+.moodle .sidebar-nav li {
   text-indent: 20px;
   line-height: 40px;
 }
 
-.sidebar-nav li a {
+.moodle .sidebar-nav li a {
   display: block;
   text-decoration: none;
   color: #999999;
 }
 
-.sidebar-nav li a:hover {
+.moodle .sidebar-nav li a:hover {
   text-decoration: none;
   color: #fff;
   background: rgba(255, 255, 255, 0.2);
 }
 
-.sidebar-nav li a:active, .sidebar-nav li a:focus {
+.moodle .sidebar-nav li a:active,
+.moodle .sidebar-nav li a:focus {
   text-decoration: none;
 }
 
-.sidebar-nav>.sidebar-brand {
+.moodle .sidebar-nav > .sidebar-brand {
   height: 65px;
   font-size: 18px;
   line-height: 60px;
 }
 
-.sidebar-nav>.sidebar-brand a {
+.moodle .sidebar-nav > .sidebar-brand a {
   color: #999999;
 }
 
-.sidebar-nav>.sidebar-brand a:hover {
+.moodle .sidebar-nav > .sidebar-brand a:hover {
   color: #fff;
   background: none;
 }
 
-@media(min-width:768px) {
+
+@media (min-width: 768px) {
   #wrapper {
     padding-left: 0;
   }
@@ -124,5 +123,8 @@ background: linear-gradient(147deg, rgba(2,0,36,1) 0%, rgba(10,74,120,1) 35%, rg
   #wrapper.toggled #page-content-wrapper {
     position: relative;
     margin-right: 0;
+    /* width : calc(100% - 250px); */
   }
+
+  
 }

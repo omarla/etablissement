@@ -1,6 +1,7 @@
 <?php
     require_once __DIR__ . "/../verify.php";
     require_once __DIR__ . "/../../common/classes/module.php";
+    require_once __DIR__ . "/../../common/classes/etudiant.php";
 
     class ModeleUtilisateurAPI extends Database
     {
@@ -81,4 +82,13 @@
                 Response::send_error(HTTP_BAD_REQUEST, "Ce module n'éxiste pas");
             }
         } 
+
+        public function getPseudoEtudiants(){
+            try{
+                $result = Etudiant::UtilisateursPossible();
+                Response::sendHttpBodyAndExit($result);
+            }catch(PDOException $e){
+                Response::send_error(HTTP_BAD_REQUEST, 'Erreur lors de la récupération de la liste des etudiants');
+            }
+        }
     }

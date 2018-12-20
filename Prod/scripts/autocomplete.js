@@ -116,6 +116,22 @@ if (
   });
 }
 
+if (
+  initVars.url.module === "administration" &&
+  initVars.url.type === "etudiant" &&
+  initVars.url.action === "liste_etudiant"
+) {
+  $("input#pseudo_etudiant").flexdatalist({
+    selectionRequired: true,
+    minLength: 0,
+    visibleProperties: "pseudo_utilisateur",
+    searchIn: "pseudo_utilisateur",
+    valueProperty: "id_utilisateur",
+    cache: false,
+    data: "php/api/index.php?type=utilisateur&action=pseudo_etudiant"
+  });
+}
+
 $.get("php/api/index.php?type=semestre&action=liste_semestres", function(data) {
   result = JSON.parse(data);
   $(".semestre_select").each(function() {

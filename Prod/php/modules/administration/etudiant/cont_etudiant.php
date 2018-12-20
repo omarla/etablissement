@@ -24,7 +24,7 @@
         public function ajouter_etudiant()
         {
             $num = isset($_POST['num_etudiant']) ? htmlspecialchars($_POST['num_etudiant']) : die('Pas de num');
-            $id_utilisateur = isset($_POST['id_utilisateur']) ? htmlspecialchars($_POST['id_utilisateur']) : die("Pas d'utilisateur");
+            $id_utilisateur = isset($_POST['pseudo_etudiant']) ? htmlspecialchars($_POST['pseudo_etudiant']) : die("Pas d'utilisateur");
 
             $this->modele->ajouter_etudiant($num, $id_utilisateur);
 
@@ -33,11 +33,11 @@
 
         public function afficher_etudiant()
         {
-            $num = isset($_GET['num_etudiant']) ? htmlspecialchars($_GET['num_etudiant']) : die('pas de num');
+            $num = isset($_GET['num']) ? htmlspecialchars($_GET['num']) : die('pas de num');
 
             $etudiant = $this->modele->getEtudiant($num);
 
-            $this->vue->afficher_etudiant($etudiant->detailsEtudiant(), $semestre->anneesSemestre(), $semestre->etudiantsSemestre(), $annee);
+            $this->vue->afficher_etudiant($etudiant->detailsEtudiant());
         }
 
         public function supprimer_etudiant()
@@ -47,5 +47,13 @@
             $this->modele->supprimer_etudiant($num);
 
             header('Location: index.php?module=administration&type=etudiant&action=liste_etudiant');
+        }
+
+        public function modifier_etudiant(){
+            $num = isset($_GET['num_etudiant']) ? htmlspecialchars($_GET['num_etudiant']) : die('pas de num');
+
+            $etudiant = $this->modele->getEtudiant($num);
+
+            header('Location: index.php?module=administration&type=semestre&action=afficher_semestre&id='.$ref);
         }
     }
